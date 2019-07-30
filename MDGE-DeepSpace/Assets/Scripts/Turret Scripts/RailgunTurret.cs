@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MGTurret : MonoBehaviour
+public class RailgunTurret : MonoBehaviour
 {
-
 
     /// <summary>
     /// The furthest distance that the turret can detect enemies.
@@ -18,31 +17,27 @@ public class MGTurret : MonoBehaviour
     private Transform target;
 
     /// <summary>
-    /// The number of times the turret attacks in one second.
+    /// The number of times the turret will attempt to charge itself up per second.
+    /// Note that if a charge is in progress, it will ignore consecutive attempts to start
+    /// charging.
     /// </summary>
     public float firingRate;
 
     /// <summary>
-    /// The duration left before the next turret fire.
+    /// The duration before the next charging up attempt.
     /// </summary>
     private float firingCountdown;
 
     /// <summary>
-    /// The GameObject to be treated as the bullet.
-    /// </summary>
-    public GameObject bullet;
-
-    /// <summary>
     /// The Animator component responsible for animating this turret.
-    /// This is used to set certain animation parameters to allow the turret to
-    /// animate as required.
+    /// We need this so as to get the current state of the turret's
+    /// animation.
     /// </summary>
     [SerializeField]
     private Animator turretAnimator;
 
     /// <summary>
-    /// Checks for nearby enemies every specified seconds.
-    /// Used in the coroutine for detecting enemies.
+    /// Checks for an enemy every specified amount of time.
     /// </summary>
     [Header("Code Properties")]
     public float enemyDetectionPeriod = 0.5f;
@@ -50,11 +45,10 @@ public class MGTurret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //start the coroutine for detecting enemies
+        //run the coroutine that detects for enemies
         StartCoroutine(DetectEnemies(enemyDetectionPeriod));
 
-        //calculate the time till next turret attack
-        //period is the reciprocal of frequency
+        //reset countdown
         firingCountdown = 1 / firingRate;
     }
 
@@ -66,19 +60,15 @@ public class MGTurret : MonoBehaviour
             //aim at the target
             AimAtTarget();
 
-            //fire at the target
-            FireAtTarget();
+            //charge up an attack
+            ChargeUp();
 
-            //enable animation
-            turretAnimator.SetBool("isFiring", true);
-        }
-        else
-        {
-            //reset countdown
-            firingCountdown = 1 / firingRate;
-
-            //disable animation
-            turretAnimator.SetBool("isFiring", false);
+            //fire a laser when the animator's state is in the "Fire" state
+            if (IsFiringState("Railgun Firing"))
+            {
+                //TODO: Insert You Jing's line renderer thingy here (once I know how it works)
+                Debug.Log("FIRE!");
+            }
         }
     }
 
@@ -190,23 +180,22 @@ public class MGTurret : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, DetermineAngle(transform.position, target.position));
     }
 
-    private void FireAtTarget()
+    private void ChargeUp()
     {
-
-        //reduce the countdown
+        //start counting down
         firingCountdown -= Time.deltaTime;
 
         //when our countdown hits zero or less...
         if (firingCountdown <= 0)
         {
-            //fire a bullet at a specified speed towards the target
-            GameObject bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
 
-            //apply a velocity to the bullet
-            bulletInstance.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
-
-            //reset countdown
-            firingCountdown = 1 / firingRate;
+            //set a trigger on the animator, which charges up an attack
+            turretAnimator.SetTrigger("Charge");
         }
+    }
+
+    private bool IsFiringState(string stateName)
+    {
+        return turretAnimator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 }
