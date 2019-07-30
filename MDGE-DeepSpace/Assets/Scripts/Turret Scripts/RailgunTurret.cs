@@ -60,6 +60,7 @@ public class RailgunTurret : MonoBehaviour
             //aim at the target
             AimAtTarget();
 
+            //FIXME: Only set the trigger of charging the railgun once after an enemy is deteced. Do not set trigger when charging up.
             //charge up an attack
             ChargeUp();
 
