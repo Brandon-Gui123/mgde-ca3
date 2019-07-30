@@ -25,6 +25,19 @@ public class MGTurret : MonoBehaviour
     /// </summary>
     private float firingCountdown;
 
+    /// <summary>
+    /// The GameObject to be treated as the bullet.
+    /// </summary>
+    public GameObject bullet;
+
+    /// <summary>
+    /// The Animator component responsible for animating this turret.
+    /// This is used to set certain animation parameters to allow the turret to
+    /// animate as required.
+    /// </summary>
+    [SerializeField]
+    private Animator turretAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,11 +60,17 @@ public class MGTurret : MonoBehaviour
 
             //fire at the target
             FireAtTarget();
+
+            //enable animation
+            turretAnimator.SetBool("isFiring", true);
         }
         else
         {
             //reset countdown
             firingCountdown = 1 / firingRate;
+
+            //disable animation
+            turretAnimator.SetBool("isFiring", false);
         }
     }
 
@@ -172,18 +191,11 @@ public class MGTurret : MonoBehaviour
         //when our countdown hits zero or less...
         if (firingCountdown <= 0)
         {
-            //raycast for testing
-            RaycastHit2D hitInfo2D = Physics2D.Raycast(transform.position, transform.up, range, LayerMask.GetMask("Enemy"));
+            //fire a bullet at a specified speed towards the target
+            GameObject bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
 
-            //did we langgar anything
-            if (hitInfo2D)
-            {
-                Debug.Log("The turret langgar the enemy " + hitInfo2D.collider.name);
-            }
-            else
-            {
-                Debug.Log("We langgar nothing.");
-            }
+            //apply a velocity to the bullet
+            bulletInstance.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
 
             //reset countdown
             firingCountdown = 1 / firingRate;
