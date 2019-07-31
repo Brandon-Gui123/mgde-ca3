@@ -5,7 +5,6 @@ using UnityEngine;
 public class MGTurret : MonoBehaviour
 {
 
-
     /// <summary>
     /// The furthest distance that the turret can detect enemies.
     /// </summary>

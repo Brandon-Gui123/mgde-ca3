@@ -244,7 +244,6 @@ public class RailgunTurret : MonoBehaviour
         //infinte loop
         while (true)
         {
-
             //check for the nearest enemy
             target = GetNearestEnemy();
 
