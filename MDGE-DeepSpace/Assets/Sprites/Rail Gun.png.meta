@@ -255,7 +255,7 @@ TextureImporter:
         width: 742
         height: 886
       alignment: 9
-      pivot: {x: 0.49510878, y: 0.46928045}
+      pivot: {x: 0.49614194, y: 0.46122697}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -270,12 +270,12 @@ TextureImporter:
       name: Rail Gun_8
       rect:
         serializedVersion: 2
-        x: 2189
+        x: 2198
         y: 1021
         width: 742
         height: 934
       alignment: 9
-      pivot: {x: 0.4946253, y: 0.4359544}
+      pivot: {x: 0.4907674, y: 0.44208443}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -315,7 +315,7 @@ TextureImporter:
         width: 742
         height: 931
       alignment: 9
-      pivot: {x: 0.50208193, y: 0.4435859}
+      pivot: {x: 0.4974227, y: 0.43615964}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -330,12 +330,12 @@ TextureImporter:
       name: Rail Gun_11
       rect:
         serializedVersion: 2
-        x: 2189
-        y: 0
+        x: 2186
+        y: 3
         width: 742
-        height: 835
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 827
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49171987}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
