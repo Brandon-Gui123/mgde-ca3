@@ -725,7 +725,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 8
-  firingRate: 0.1
+  waitTimeBeforeCharging: 2
+  chargingDuration: 1
+  firingDuration: 1
   turretAnimator: {fileID: 841244741}
   enemyDetectionPeriod: 0.5
 --- !u!1 &877704788
