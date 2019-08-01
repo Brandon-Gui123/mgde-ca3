@@ -52,5 +52,7 @@
         "temp/": true,
         "Temp/": true,
         ".vs/": true    //hide .vs directory since that's for Visual Studio
-    }
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true
 }

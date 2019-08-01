@@ -36,6 +36,7 @@ public class Kamikaze : EnemyController
     /// <summary>
     /// The distance that the enemy will stop at before it blows up.
     /// </summary>
+    [Header("Kamikaze Properties")]
     public float stoppingDistance;
 
     /// <summary>
@@ -130,16 +131,4 @@ public class Kamikaze : EnemyController
         }
     }
 
-    /**
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        print("Player has been Kamikazed!");
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            playerHealthScript.playerDamaged(damage);
-            Destroy(this.gameObject);
-        }
-
-    }
-    */
 }

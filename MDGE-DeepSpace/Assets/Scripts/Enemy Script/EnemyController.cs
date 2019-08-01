@@ -2,11 +2,10 @@ using UnityEngine;
 
 public abstract class EnemyController : MonoBehaviour
 {
-    //TODO: Add stuff common in all enemies
-
     /// <summary>
     /// The amount of health this enemy has.
     /// </summary>
+    [Header("Common Enemy Properties")]
     public float health = 100;
 
     /// <summary>
