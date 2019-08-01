@@ -92,7 +92,7 @@ public class Kamikaze : EnemyController
             case AIState.Purusing:
                 //aim at the target and move towards it
                 AimAtTarget();
-                transform.Translate(Vector3.up * Time.deltaTime); //this is relative to the object
+                transform.Translate(Vector3.up * speed * Time.deltaTime); //this is relative to the object
 
                 //calculate distance between player and enemy
                 if (Vector2.Distance(transform.position, player.position) <= stoppingDistance)
@@ -111,6 +111,9 @@ public class Kamikaze : EnemyController
                 {
                     //go back to previous state to move closer to the player
                     currentAIState = AIState.Purusing;
+
+                    //reset countdown
+                    fuseCountdown = fuseTime;
                 }
 
                 //countdown the explosion
