@@ -15,13 +15,7 @@ public class RailgunBeam : MonoBehaviour
     float currentBeamLength;
     float currentBeamWidth;
 
-    void OnMouseOver() {
-        CastBeam();
-    }
-    
-    void OnMouseExit() {
-        ResetBeam();
-    }
+    public bool fireRailgunShot = false;
 
     void Start() {
         //Line renderer validation
@@ -36,6 +30,12 @@ public class RailgunBeam : MonoBehaviour
     void Update() {
         startingPoint = transform.position;
         beamRenderer.SetPosition(0, startingPoint);
+        if (fireRailgunShot) {
+            CastBeam();
+        }
+        else {
+            ResetBeam();
+        }
     }
 
     void CastBeam() {
@@ -46,12 +46,12 @@ public class RailgunBeam : MonoBehaviour
         beamRenderer.SetPosition(1, startingPoint + (Vector2)transform.up * currentBeamLength);
         beamRenderer.startWidth = currentBeamWidth;
         beamRenderer.endWidth = currentBeamWidth;
-        GameObject[] langgar = InLine();
+        GameObject[] langgar = GameObjectsInLine();
         for (int i = 0; i < langgar.Length; i++) {
-            Debug.Log(langgar[i]);
+            Debug.Log(langgar[i]);//deal damage method
         }
     }
-    public GameObject[] InLine() {
+    public GameObject[] GameObjectsInLine() {
         return InLine(transform.position, transform.up, currentBeamLength, currentBeamWidth);
     }
     public GameObject[] InLine(Vector2 origin, Vector2 direction, float distance, float width) {
