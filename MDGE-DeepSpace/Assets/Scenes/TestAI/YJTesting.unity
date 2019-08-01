@@ -325,6 +325,7 @@ MonoBehaviour:
   beamWidth: 0.2
   beamThickenSpeed: 0.5
   beamDuration: 0.5
+  fireRailgunShot: 0
 --- !u!61 &961092529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -444,7 +445,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 668acbd2418c9de498826a1b5fe4eb11, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -561,11 +562,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751573c161b51a7489483f3711eab127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileDamage: 1
+  projectileDamageRate: 0.5
+  projectileLifetime: 5
+  animator: {fileID: 0}
   beamStartWidth: 0.2
   beamEndWidth: 0.2
   beamDuration: 0.5
-  maxChainCount: 5
   inRange: []
+  detectionRange: 3
+  maxTargetsToHit: 4
+  fire: 1
+  renderLine: 0
 --- !u!212 &5610215051507057087
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -751,6 +759,7 @@ MonoBehaviour:
   beamWidth: 0.2
   beamThickenSpeed: 0.5
   beamDuration: 0.5
+  fireRailgunShot: 0
 --- !u!212 &8880824554849726353
 SpriteRenderer:
   m_ObjectHideFlags: 0

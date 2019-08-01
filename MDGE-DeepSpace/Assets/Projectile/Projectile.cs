@@ -2,52 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChainBeam : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    LineRenderer beamRenderer;
-
-    Vector2 startingPoint;
-    public float beamStartWidth = 0.2f, beamEndWidth = 0.2f;
-    public float beamDuration = 0.5f;
-
-    //gameobjects in radius
-    public GameObject[] inRange;
-
-    public float detectionRange = 3f;//radius
-    public float maxTargetsToHit = 4f;
-
-    void Start() {
-        //Line renderer validation
-        if (!GetComponent<LineRenderer>()) {
-            gameObject.AddComponent<LineRenderer>();
+    public IEnumerator DamageEnemy(GameObject[] enemiesArr, float projectileDamage) {
+        foreach (GameObject enemy in enemiesArr) {
+            enemy.GetComponent<EnemyController>().health -= projectileDamage;
         }
-        beamRenderer = GetComponent<LineRenderer>();
-
+        yield return null;
     }
-    private void OnDrawGizmos() {
-        //
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    public void AnimateTheProjectile(Animator animator, string animationName) {
+        animator.Play(animationName);
     }
+    
 
-    void Update() {
-        inRange = ScanRadius(transform.position, detectionRange, maxTargetsToHit);
-        DrawBeamBranch(transform.position, detectionRange, maxTargetsToHit);
-    }
 
-    //draw lineRenderer across objects in radius
-    void DrawBeamBranch(Vector2 origin, float scanRadius, float returnCount) {
-        GameObject[] bunchOfTargets = ScanRadius(origin,  scanRadius, returnCount);
-        beamRenderer.positionCount = bunchOfTargets.Length + 1;
-        beamRenderer.SetPosition(0, transform.position);
-        beamRenderer.startWidth = beamStartWidth;
-        beamRenderer.endWidth = beamEndWidth;
-        for (int i = 0; i < bunchOfTargets.Length; i++) {
-            beamRenderer.SetPosition(i + 1, bunchOfTargets[i].transform.position);
-        }
-    }
-
-    //returns nearest few(returnCount) objects
-    GameObject[] ScanRadius(Vector2 origin, float scanRadius, float returnCount) {
+    //returns nearest few objects
+    public virtual GameObject[] ScanRadius(Vector2 origin, float scanRadius, float returnCount) {
         Collider2D[] scannedColliders = Physics2D.OverlapCircleAll(origin, scanRadius, Physics2D.AllLayers);//change the layermask
 
         GameObject[] scannedObjects = new GameObject[scannedColliders.Length];
@@ -74,8 +44,6 @@ public class ChainBeam : MonoBehaviour
         }
         return toBeReturned.ToArray();        
     }
-
-    //finds the lowest value (closest distance) from a floatArray, not considering the elements with indexes in the 'iterator mask'
     int FindMinIndex(float[] listOfFloats, List<int> iteratorMask) {
         float nextLowest = Mathf.Max(listOfFloats);
         int index = -1;
@@ -97,5 +65,4 @@ public class ChainBeam : MonoBehaviour
         }
         return index;
     }
-
 }
