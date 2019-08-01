@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine;
 
+
 public class CanvasManager : MonoBehaviour
 {//This canvas creates a simpleton which guides canvas through all scenes, handles event logics such as scene change, 
     //set UI active and disable UI
@@ -16,13 +17,19 @@ public class CanvasManager : MonoBehaviour
     public GameObject gameOverUI; //game over when player is dead 
     public GameObject OptionsMenuUI; //options menu
    
+    
 
     public bool GameIsPause = false;
     //public GameObject joystickUI;
 
-   
-    
-    
+    private void Start()
+    {
+        
+        
+        
+    }
+
+
     private void Awake()
     {
         if (Instance != null)
@@ -81,6 +88,7 @@ public class CanvasManager : MonoBehaviour
     public  void setGameOverScreen() //sets game over screen to true
     {
         gameOverUI.SetActive(true);
+        
     }
 
   
@@ -107,6 +115,7 @@ public class CanvasManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPause = false;
+        
         //try
         //{
         //    //joystickUI.SetActive(true);
@@ -126,6 +135,7 @@ public class CanvasManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPause = true;
+        
         //joystickUI.SetActive(false);
         //try
         //{
@@ -136,7 +146,7 @@ public class CanvasManager : MonoBehaviour
         //{
 
         //}
-    
+
 
     }
 
