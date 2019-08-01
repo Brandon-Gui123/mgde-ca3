@@ -9,8 +9,12 @@ public class ChainBeam : MonoBehaviour
     Vector2 startingPoint;
     public float beamStartWidth = 0.2f, beamEndWidth = 0.2f;
     public float beamDuration = 0.5f;
-    public float maxChainCount = 5f;
+
+    //gameobjects in radius
     public GameObject[] inRange;
+
+    public float detectionRange = 3f;//radius
+    public float maxTargetsToHit = 4f;
 
     void Start() {
         //Line renderer validation
@@ -21,13 +25,16 @@ public class ChainBeam : MonoBehaviour
 
     }
     private void OnDrawGizmos() {
-        Gizmos.DrawWireSphere(transform.position, 3);
+        //
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
     void Update() {
-        inRange = ScanRadius(transform.position, 3, 4);
-        DrawBeamBranch(transform.position, 3, 4);
+        inRange = ScanRadius(transform.position, detectionRange, maxTargetsToHit);
+        DrawBeamBranch(transform.position, detectionRange, maxTargetsToHit);
     }
+
+    //draw lineRenderer across objects in radius
     void DrawBeamBranch(Vector2 origin, float scanRadius, float returnCount) {
         GameObject[] bunchOfTargets = ScanRadius(origin,  scanRadius, returnCount);
         beamRenderer.positionCount = bunchOfTargets.Length + 1;
@@ -38,8 +45,10 @@ public class ChainBeam : MonoBehaviour
             beamRenderer.SetPosition(i + 1, bunchOfTargets[i].transform.position);
         }
     }
+
+    //returns nearest few(returnCount) objects
     GameObject[] ScanRadius(Vector2 origin, float scanRadius, float returnCount) {
-        Collider2D[] scannedColliders = Physics2D.OverlapCircleAll(origin, scanRadius, Physics2D.AllLayers);
+        Collider2D[] scannedColliders = Physics2D.OverlapCircleAll(origin, scanRadius, Physics2D.AllLayers);//change the layermask
 
         GameObject[] scannedObjects = new GameObject[scannedColliders.Length];
         for (int i = 0; i < scannedColliders.Length; i++) {
@@ -65,6 +74,8 @@ public class ChainBeam : MonoBehaviour
         }
         return toBeReturned.ToArray();        
     }
+
+    //finds the lowest value (closest distance) from a floatArray, not considering the elements with indexes in the 'iterator mask'
     int FindMinIndex(float[] listOfFloats, List<int> iteratorMask) {
         float nextLowest = Mathf.Max(listOfFloats);
         int index = -1;
