@@ -27,9 +27,11 @@ public class RailgunTurret : Turret
     }
 
     /// <summary>
-    /// The duration the turret will take before it begins charging up.
+    /// The duration the turret will wait before it begins charging up a shot.
+    /// Specifically, this is the duration between states 
+    /// <see cref="TurretState.Idle"/> and <see cref="TurretState.ChargingUp"/>.
     /// </summary>
-    [Header("Railgun Turret's Properties"), Tooltip("The duration the turret will wait before it begins charging up.")]
+    [Header("Railgun Turret's Properties"), Tooltip("The duration the turret will wait before it begins charging up. This is essentially the duration between idle and charging up.")]
     public float waitTimeBeforeCharging;
 
     /// <summary>
