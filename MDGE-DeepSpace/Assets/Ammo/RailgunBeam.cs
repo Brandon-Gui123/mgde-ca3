@@ -18,9 +18,11 @@ public class RailgunBeam : MonoBehaviour
     void OnMouseOver() {
         CastBeam();
     }
+    
     void OnMouseExit() {
         ResetBeam();
     }
+
     void Start() {
         //Line renderer validation
         if (!GetComponent<LineRenderer>()) {
