@@ -19,7 +19,7 @@ public class CanvasManager : MonoBehaviour
 
     public bool GameIsPause = false;
     //public GameObject joystickUI;
-
+    private bool isVibrationON;
    
     
     
@@ -83,11 +83,19 @@ public class CanvasManager : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-  
+    public void setVibration(bool value)
+    {
+        isVibrationON = value;
+        print("Vibration is: " + value);
+    }
 
-    private Gyroscope gyro; //use class Gyroscope for calibration
-  
-   
+    public bool getVibration()
+    {
+       return isVibrationON; 
+    }
+
+
+
     public void setTimeScale(int timeScale) //allows setting of desired timescale.
     {
         Time.timeScale = timeScale;
