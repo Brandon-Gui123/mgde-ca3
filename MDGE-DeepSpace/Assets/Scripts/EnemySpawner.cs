@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -76,7 +76,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector2 PickSpawnLocation()
     {
-
+        //TODO: Use actual map size (scaling and units accounted for)
         //calculate map size and map position
         Vector3 spawnSize = mapTransform.lossyScale + Vector3.one * extraDistance;
         Vector3 mapPosition = mapTransform.position;

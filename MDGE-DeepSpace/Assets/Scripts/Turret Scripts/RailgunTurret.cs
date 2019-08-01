@@ -80,6 +80,23 @@ public class RailgunTurret : Turret
     private bool enemyDetectionRunning = false;
 
     /// <summary>
+    /// The script component that handles the railgun beam.
+    /// </summary>
+    [Header("Beam"), SerializeField]
+    private RailgunBeam beam;
+
+    /// <summary>
+    /// The length of the railgun beam.
+    /// Enemies caught in this beam will be damaged.
+    /// </summary>
+    public float beamRange;
+
+    /// <summary>
+    /// How often will enemies in the beam be damaged.
+    /// </summary>
+    public float beamDamageInterval;
+
+    /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
@@ -110,6 +127,10 @@ public class RailgunTurret : Turret
         //everything here is the reciprocal of the variable because we are adjusting the speed multiplier, instead of the duration
         turretAnimator.SetFloat("chargingDuration", 1 / chargingDuration);
         turretAnimator.SetFloat("firingDuration", 1 / firingDuration);
+
+        beam.beamDamageInterval = beamDamageInterval;
+        beam.beamRange = beamRange;
+        beam.canDamageEnemies = false;
     }
 
     // Update is called once per frame
@@ -181,9 +202,8 @@ public class RailgunTurret : Turret
 
                 if (firingCountdown > 0)
                 {
-                    //this is where we fire the enemy I think
-                    //TODO: Insert You Jing's line renderer thingy here
-                    Debug.Log("Firing at enemy");
+                    //our railgun beam will be able to damage enemies
+                    beam.canDamageEnemies = true;
                 }
                 else
                 {
@@ -195,6 +215,9 @@ public class RailgunTurret : Turret
 
                     //set a cooldown time before it can charge up and fire again
                     waitTimeCountdown = waitTimeBeforeCharging;
+
+                    //our railgun beam will be able to damage enemies
+                    beam.canDamageEnemies = false;
                 }
 
                 break;
@@ -209,8 +232,13 @@ public class RailgunTurret : Turret
         //draw a wire sphere around the turret showing its range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+
+        Debug.Log("Hello world!");
     }
 
+    /// <summary>
+    /// Charges the railgun for its next attack.
+    /// </summary>
     private void ChargeUp()
     {
         //start counting down

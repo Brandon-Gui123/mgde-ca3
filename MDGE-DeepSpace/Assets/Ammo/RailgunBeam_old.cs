@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RailgunBeam : MonoBehaviour
+public class RailgunBeam_old : MonoBehaviour
 {
     LineRenderer beamRenderer;
 
@@ -72,5 +72,15 @@ public class RailgunBeam : MonoBehaviour
         beamRenderer.startWidth = beamWidth;
         beamRenderer.endWidth = beamWidth;
         currentBeamLength = 0f;
+    }
+
+    /// <summary>
+    /// Sent each frame where a collider on another object is touching
+    /// this object's collider (2D physics only).
+    /// </summary>
+    /// <param name="other">The Collision2D data associated with this collision.</param>
+    void OnCollisionStay2D(Collision2D other)
+    {
+        
     }
 }
