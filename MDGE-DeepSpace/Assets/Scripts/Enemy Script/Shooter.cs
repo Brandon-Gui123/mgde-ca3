@@ -22,7 +22,12 @@ public class Shooter : EnemyController
         /// <summary>
         /// The enemy is currently firing at the player.
         /// </summary>
-        Firing
+        Firing,
+
+        /// <summary>
+        /// The enemy is dead.
+        /// </summary>
+        Dead
     }
 
     /// <summary>
@@ -52,7 +57,7 @@ public class Shooter : EnemyController
     /// The Animator component responsible for handling animations in this enemy.
     /// </summary>
     [SerializeField]
-    private Animator enemyAnimator;
+    private Animator shooterAnimator;
 
     public GameObject bullet;
 
@@ -135,7 +140,7 @@ public class Shooter : EnemyController
                 {
 
                     //trigger the animation to show that the enemy is firing
-                    enemyAnimator.SetTrigger("Fire");
+                    shooterAnimator.SetTrigger("Fire");
 
                     //tester bullet
                     GameObject bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
@@ -146,6 +151,32 @@ public class Shooter : EnemyController
                 }
 
                 break;
+
+            //the enemy is dead
+            case AIState.Dead:
+
+                //obtain information about the animator's current state
+                AnimatorStateInfo currentAnimatorStateInfo = shooterAnimator.GetCurrentAnimatorStateInfo(0);
+
+                //destroy the enemy object after its animation is complete
+                if (currentAnimatorStateInfo.normalizedTime >= 1 && currentAnimatorStateInfo.IsName("Alien Dies"))
+                {
+                    Destroy(gameObject);
+                }
+
+                break;
         }
+    }
+
+    /// <summary>
+    /// Callback function called when the Shooter dies.
+    /// </summary>
+    protected override void OnDie()
+    {
+        //transition to explosion animation
+        shooterAnimator.SetTrigger("Explosion");
+
+        //move to state: being dead
+        currentAIState = AIState.Dead;
     }
 }

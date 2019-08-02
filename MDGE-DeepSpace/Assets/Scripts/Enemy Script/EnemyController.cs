@@ -3,9 +3,15 @@ using UnityEngine;
 public abstract class EnemyController : MonoBehaviour
 {
     /// <summary>
-    /// The amount of health this enemy has.
+    /// The maximum amount of health that this enemy can have.
     /// </summary>
     [Header("Common Enemy Properties")]
+    public float maxHealth = 100;
+
+    /// <summary>
+    /// The amount of health this enemy has.
+    /// The enemy will die if its health reaches 0.
+    /// </summary>
     public float health = 100;
 
     /// <summary>
@@ -24,6 +30,13 @@ public abstract class EnemyController : MonoBehaviour
     /// The script component responsible for handling player health calculations.
     /// </summary>
     protected Player_Health_Script playerHealthScript;
+
+    /// <summary>
+    /// Whether this enemy is dead.
+    /// We use this to prevent further damage from causing additional calls
+    /// of <see cref="OnDamage"/>.
+    /// </summary>
+    private bool isDead;
 
     /// <summary>
     /// Determines the angle that the turret has to rotate in order to look at a given point.
@@ -48,4 +61,37 @@ public abstract class EnemyController : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, DetermineAngle(transform.position, player.position));
     }
+
+    /// <summary>
+    /// Damages the enemy.
+    /// </summary>
+    /// <param name="damage">The amount of damage to apply to the enemy.</param>
+    public void Damage(float damage)
+    {
+        //no need to damage the enemy since it is already dead
+        if (isDead)
+        {
+            return;
+        }
+
+        if (health - damage < 0)
+        {
+            health = 0;
+
+            //the enemy is dead
+            isDead = true;
+
+            //execute callback function
+            OnDie();
+        }
+        else
+        {
+            health -= damage;
+        }
+    }
+
+    /// <summary>
+    /// Callback function that gets called when the enemy's health reaches 0.
+    /// </summary>
+    protected abstract void OnDie();
 }

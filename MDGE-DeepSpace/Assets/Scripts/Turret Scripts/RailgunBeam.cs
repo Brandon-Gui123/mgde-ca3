@@ -6,9 +6,10 @@ public class RailgunBeam : MonoBehaviour
 {
 
     /// <summary>
-    /// How often will enemies in the beam be damaged.
+    /// The script component of the railgun turret.
     /// </summary>
-    public float beamDamageInterval;
+    [SerializeField]
+    private RailgunTurret railgunTurret;
 
     /// <summary>
     /// The time left before all enemies in the beam will get damaged.
@@ -26,12 +27,6 @@ public class RailgunBeam : MonoBehaviour
     private bool doDamageEnemies;
 
     /// <summary>
-    /// The length of the railgun beam.
-    /// Enemies caught in this beam will be damaged.
-    /// </summary>
-    public float beamRange;
-
-    /// <summary>
     /// The LineRenderer responsible for displaying the beam.
     /// </summary>
     private LineRenderer beamLineRenderer;
@@ -42,7 +37,7 @@ public class RailgunBeam : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        beamDamageIntervalCountdown = 0;
+        beamDamageIntervalCountdown = railgunTurret.beamDamageInterval;
 
         if (!beamLineRenderer)
         {
@@ -65,13 +60,16 @@ public class RailgunBeam : MonoBehaviour
                 //damage each enemy in the beam
                 foreach (EnemyController enemy in GetEnemiesInBeam())
                 {
-                    Debug.Log(enemy.name + " is damaged!");
+                    enemy.Damage(railgunTurret.beamDamage);
                 }
+
+                //reset countdown
+                beamDamageIntervalCountdown = railgunTurret.beamDamageInterval;
             }
 
             //display the railgun beam
             beamLineRenderer.SetPositions(
-                new Vector3[] { Vector3.zero, new Vector3(beamRange, 0, 0) }
+                new Vector3[] { Vector3.zero, new Vector3(railgunTurret.beamRange, 0, 0) }
             );
         }
         else
@@ -89,8 +87,8 @@ public class RailgunBeam : MonoBehaviour
                 transform.position,
                 Vector2.one * beamLineRenderer.startWidth,
                 0,
-                transform.up,
-                beamRange,
+                transform.right,
+                railgunTurret.beamRange,
                 LayerMask.GetMask("Enemy")
             );
 

@@ -24,6 +24,11 @@ public abstract class Turret : MonoBehaviour
     public float enemyDetectionPeriod = 0.5f;
 
     /// <summary>
+    /// Whether the coroutine <see cref="DetectEnemies(float)"/> is running.
+    /// </summary>
+    protected bool enemyDetectionRunning = false;
+
+    /// <summary>
     /// A coroutine that runs at a specified interval.
     /// This coroutine handles detection of enemies.
     /// The reason we put this in a coroutine is because continuously
@@ -33,13 +38,15 @@ public abstract class Turret : MonoBehaviour
     protected IEnumerator DetectEnemies(float interval)
     {
 
+        //the coroutine is running
+        enemyDetectionRunning = true;
+
         //infinte loop
         while (true)
         {
 
             //check for the nearest enemy
             target = GetNearestEnemy();
-
             //suspend execution for 0.5 seconds
             yield return new WaitForSeconds(interval);
         }
@@ -70,7 +77,7 @@ public abstract class Turret : MonoBehaviour
         {
 
             //check the distance between the turret and the enemy collider
-            float distanceToTurret = Vector3.Distance(enemyCollider.transform.position, transform.position);
+            float distanceToTurret = Vector2.Distance(enemyCollider.transform.position, transform.position);
 
             //is the distance smaller than our calculated distance?
             if (distanceToTurret < closestDistanceToTurret)

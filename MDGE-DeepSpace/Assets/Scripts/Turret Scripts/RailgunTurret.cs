@@ -75,15 +75,15 @@ public class RailgunTurret : Turret
     private Animator turretAnimator;
 
     /// <summary>
-    /// Whether the coroutine <see cref="DetectEnemies(float)"/> is running.
-    /// </summary>
-    private bool enemyDetectionRunning = false;
-
-    /// <summary>
     /// The script component that handles the railgun beam.
     /// </summary>
     [Header("Beam"), SerializeField]
     private RailgunBeam beam;
+
+    /// <summary>
+    /// The damage that this turret's beam will apply to enemies.
+    /// </summary>
+    public float beamDamage;
 
     /// <summary>
     /// The length of the railgun beam.
@@ -127,10 +127,6 @@ public class RailgunTurret : Turret
         //everything here is the reciprocal of the variable because we are adjusting the speed multiplier, instead of the duration
         turretAnimator.SetFloat("chargingDuration", 1 / chargingDuration);
         turretAnimator.SetFloat("firingDuration", 1 / firingDuration);
-
-        beam.beamDamageInterval = beamDamageInterval;
-        beam.beamRange = beamRange;
-        beam.canDamageEnemies = false;
     }
 
     // Update is called once per frame
@@ -142,6 +138,8 @@ public class RailgunTurret : Turret
             //aim at the target
             AimAtTarget();
         }
+
+        Debug.Log(currentTurretState.ToString());
 
         switch (currentTurretState)
         {
@@ -218,6 +216,13 @@ public class RailgunTurret : Turret
 
                     //our railgun beam will be able to damage enemies
                     beam.canDamageEnemies = false;
+
+                    //start our coroutine for detecting enemies, if it isn't running
+                    // if (!enemyDetectionRunning)
+                    // {
+                    //     StartCoroutine(DetectEnemies(enemyDetectionPeriod));
+                    // }
+
                 }
 
                 break;

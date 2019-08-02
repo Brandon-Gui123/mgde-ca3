@@ -131,4 +131,11 @@ public class Kamikaze : EnemyController
         }
     }
 
+    /// <summary>
+    /// Callback function called when the Kamikaze dies.
+    /// </summary>
+    protected override void OnDie()
+    {
+        //code here for when this guy dies
+    }
 }

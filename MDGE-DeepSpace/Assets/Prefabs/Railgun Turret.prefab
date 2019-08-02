@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793860930}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2641709805036802687}
@@ -71,10 +71,10 @@ LineRenderer:
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.03
+    widthMultiplier: 0.08
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -93,7 +93,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.57254905, b: 1, a: 1}
-      key1: {r: 0, g: 0.57254905, b: 1, a: 0.40392157}
+      key1: {r: 0, g: 0.57254905, b: 1, a: 0.25882354}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -108,7 +108,7 @@ LineRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 62451
+      atime0: 62644
       atime1: 65535
       atime2: 65535
       atime3: 0
@@ -139,9 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a334650179147804287002739044051a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamDamageInterval: 0
+  railgunTurret: {fileID: 841244743}
   canDamageEnemies: 0
-  beamRange: 0
 --- !u!1 &2641709805036802680
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +258,9 @@ MonoBehaviour:
   enemyDetectionPeriod: 0.5
   waitTimeBeforeCharging: 2
   chargingDuration: 1
-  firingDuration: 1
+  firingDuration: 2
   turretAnimator: {fileID: 2641709805036802686}
   beam: {fileID: 793860933}
+  beamDamage: 5
   beamRange: 100
-  beamDamageInterval: 2
+  beamDamageInterval: 0.1
