@@ -2538,6 +2538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 464359296}
   numEnemiesInCurrentWave: 0
+  delayBetweenWaves: 5
 --- !u!1 &1475232499
 GameObject:
   m_ObjectHideFlags: 0
@@ -3380,7 +3381,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a85429d85a204419ef82ae3a403843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySets: []
+  enemySets:
+  - enemyType: {fileID: 381639306, guid: f02f977ac15e80d4987cfaf4cec6e60a, type: 3}
+    quantity: 10
+  - enemyType: {fileID: 13384276, guid: c3106b7d07866d7478a3c7c430019702, type: 3}
+    quantity: 10
 --- !u!1 &1877190298
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,6 +4591,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8463905375949980960, guid: 570d1404ee3c9d44499472a5980dc38b,
+        type: 3}
+      propertyPath: mapTransform
+      value: 
+      objectReference: {fileID: 877704791}
+    - target: {fileID: 8463905375949980960, guid: 570d1404ee3c9d44499472a5980dc38b,
+        type: 3}
+      propertyPath: delayPerSpawn
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8463905375949980961, guid: 570d1404ee3c9d44499472a5980dc38b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4641,10 +4656,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8463905375949980960, guid: 570d1404ee3c9d44499472a5980dc38b,
-        type: 3}
-      propertyPath: mapTransform
-      value: 
-      objectReference: {fileID: 877704791}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 570d1404ee3c9d44499472a5980dc38b, type: 3}
