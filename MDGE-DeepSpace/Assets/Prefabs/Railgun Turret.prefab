@@ -254,13 +254,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cb2ea1c183bfa4a90d80c365a1f94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 5
   enemyDetectionPeriod: 0.5
-  waitTimeBeforeCharging: 2
+  waitTimeBeforeCharging: 1
   chargingDuration: 1
-  firingDuration: 2
+  firingDuration: 3
   turretAnimator: {fileID: 2641709805036802686}
   beam: {fileID: 793860933}
-  beamDamage: 5
+  beamDamage: 8
   beamRange: 100
   beamDamageInterval: 0.1

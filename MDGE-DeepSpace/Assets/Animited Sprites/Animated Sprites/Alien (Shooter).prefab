@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4402544534866441480}
   - component: {fileID: 381639306}
   m_Layer: 8
-  m_Name: Alien
+  m_Name: Alien (Shooter)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,10 +139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ee63d1be1dd314b9a917ea9775db9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   health: 100
   player: {fileID: 0}
   speed: 2
   firingDistance: 3
   firingRate: 2
-  enemyAnimator: {fileID: 7525703685964224447}
+  shooterAnimator: {fileID: 7525703685964224447}
   bullet: {fileID: 8581804280644140685, guid: e805816742fca6e41a7705ef0d827245, type: 3}

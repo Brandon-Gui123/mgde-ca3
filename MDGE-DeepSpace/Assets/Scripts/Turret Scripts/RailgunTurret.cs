@@ -214,14 +214,8 @@ public class RailgunTurret : Turret
                     //set a cooldown time before it can charge up and fire again
                     waitTimeCountdown = waitTimeBeforeCharging;
 
-                    //our railgun beam will be able to damage enemies
+                    //our railgun beam will not be able to damage enemies
                     beam.canDamageEnemies = false;
-
-                    //start our coroutine for detecting enemies, if it isn't running
-                    // if (!enemyDetectionRunning)
-                    // {
-                    //     StartCoroutine(DetectEnemies(enemyDetectionPeriod));
-                    // }
 
                 }
 
