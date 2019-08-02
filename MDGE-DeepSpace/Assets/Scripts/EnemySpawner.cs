@@ -72,7 +72,6 @@ public class EnemySpawner : MonoBehaviour
             ) + Vector2.one * extraDistance;
     }
 
-
     // Update is called once per frame
     private void Update()
     {
@@ -101,6 +100,11 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     void OnValidate()
     {
+        if (!mapSprite)
+        {
+            mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
+        }
+
         spawnSize = new Vector2(
                 mapSprite.rect.width / mapSprite.pixelsPerUnit * mapTransform.lossyScale.x,
                 mapSprite.rect.height / mapSprite.pixelsPerUnit * mapTransform.lossyScale.y

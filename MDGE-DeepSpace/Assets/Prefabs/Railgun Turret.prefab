@@ -168,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2641709805036802680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.002, y: 0.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children:
   - {fileID: 793860931}
@@ -256,11 +256,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 5
   enemyDetectionPeriod: 0.5
-  waitTimeBeforeCharging: 1
+  waitTimeBeforeCharging: 0.5
   chargingDuration: 1
-  firingDuration: 3
+  firingDuration: 1
   turretAnimator: {fileID: 2641709805036802686}
   beam: {fileID: 793860933}
-  beamDamage: 8
-  beamRange: 100
+  beamDamage: 10
+  beamRange: 150
   beamDamageInterval: 0.1
