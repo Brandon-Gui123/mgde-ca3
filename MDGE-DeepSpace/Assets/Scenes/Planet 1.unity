@@ -956,7 +956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &464359296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,9 +971,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canSpawn: 1
   mapTransform: {fileID: 877704791}
-  extraDistance: 1
-  delayPerSpawn: 1
-  enemy: {fileID: 0}
+  extraDistance: 2
+  delayPerSpawn: 0.5
+  enemy: {fileID: 7525703685964224444, guid: f02f977ac15e80d4987cfaf4cec6e60a, type: 3}
 --- !u!4 &464359297
 Transform:
   m_ObjectHideFlags: 0
@@ -1682,7 +1682,7 @@ Transform:
   m_GameObject: {fileID: 877704788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.7, y: -0.80686855, z: 0}
-  m_LocalScale: {x: 7.4353, y: 7.4353, z: 7.4353}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -1987,14 +1987,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142386670}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 959c4315d6d5008478c1bc43f2bd9a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1142386672}
-  target: {fileID: 1166323103}
-  mapTransform: {fileID: 0}
+  target: {fileID: 1160030895}
+  mapTransform: {fileID: 877704791}
+--- !u!4 &1160030895 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2663551055036941702, guid: a49ab0c5224933645ba13e05a98c22b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 211493170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1166323101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,8 +2077,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166323101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -0.23, z: 0}
-  m_LocalScale: {x: 1.3356451, y: 1.3356451, z: 0.66782254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -2439,6 +2445,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 841244743, guid: df78a997e0d5ead4c98c2f4fe8b39b74, type: 3}
+      propertyPath: beamDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 841244743, guid: df78a997e0d5ead4c98c2f4fe8b39b74, type: 3}
+      propertyPath: firingDuration
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df78a997e0d5ead4c98c2f4fe8b39b74, type: 3}
