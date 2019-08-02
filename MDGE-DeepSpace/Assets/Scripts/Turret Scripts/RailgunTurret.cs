@@ -57,6 +57,12 @@ public class RailgunTurret : Turret
     public float firingDuration;
 
     /// <summary>
+    /// The amount of damage to inflict to all enemies in the path of its fire
+    /// when this turret fires.
+    /// </summary>
+    public float damage;
+
+    /// <summary>
     /// A countdown where, at the end, the turret will fire.
     /// </summary>
     private float firingCountdown;
@@ -75,26 +81,10 @@ public class RailgunTurret : Turret
     private Animator turretAnimator;
 
     /// <summary>
-    /// The script component that handles the railgun beam.
+    /// The script component that handles the railgun bullet.
     /// </summary>
     [Header("Beam"), SerializeField]
-    private RailgunBeam beam;
-
-    /// <summary>
-    /// The damage that this turret's beam will apply to enemies.
-    /// </summary>
-    public float beamDamage;
-
-    /// <summary>
-    /// The length of the railgun beam.
-    /// Enemies caught in this beam will be damaged.
-    /// </summary>
-    public float beamRange;
-
-    /// <summary>
-    /// How often will enemies in the beam be damaged.
-    /// </summary>
-    public float beamDamageInterval;
+    private RailgunBullet railgunBullet;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -195,6 +185,7 @@ public class RailgunTurret : Turret
 
             case TurretState.Firing:
 
+                /**
                 //start the firing countdown
                 firingCountdown -= Time.deltaTime;
 
@@ -218,6 +209,22 @@ public class RailgunTurret : Turret
                     beam.canDamageEnemies = false;
 
                 }
+                */
+
+                //fire the railgun bullet
+                FireRailgunBullet();
+
+                //damage all enemies caught in the bullet
+                foreach (EnemyController enemy in GetEnemiesInBeam())
+                {
+                    enemy.Damage(damage);
+                }
+
+                //go back to idle
+                currentTurretState = TurretState.Idle;
+
+                //reset wait duration
+                waitTimeCountdown = waitTimeBeforeCharging;
 
                 break;
         }
@@ -250,5 +257,34 @@ public class RailgunTurret : Turret
             //set a trigger on the animator, which charges up an attack
             turretAnimator.SetTrigger("Charge");
         }
+    }
+
+    private void FireRailgunBullet()
+    {
+
+        RailgunBullet railgunBulletInstance = Instantiate(railgunBullet, transform.position, transform.rotation);
+
+        //attach values into the script component
+        railgunBullet.range = range;
+        railgunBullet.startPosition = transform.position;
+    }
+
+    private EnemyController[] GetEnemiesInBeam()
+    {
+        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(
+            transform.position,
+            transform.up,
+            range,
+            LayerMask.GetMask("Enemy")
+        );
+
+        EnemyController[] enemyControllers = new EnemyController[hitInfos.Length];
+
+        for (int i = 0; i < hitInfos.Length; i++)
+        {
+            enemyControllers[i] = hitInfos[i].collider.GetComponent<EnemyController>();
+        }
+
+        return enemyControllers;
     }
 }

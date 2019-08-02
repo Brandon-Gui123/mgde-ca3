@@ -70,17 +70,14 @@ public class WaveManager : MonoBehaviour
         {
             enemyWaves.Enqueue(enemyWave);
         }
-
-        //start the wave (typically the first wave is started here)
-        StartWave();
-
+        
         delayBetweenWavesCountdown = delayBetweenWaves;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyWaves.Count <= 0)
+        if (enemyWaves.Count <= 0 && numEnemiesInCurrentWave <= 0)
         {
             Debug.Log("Level complete!");
         }

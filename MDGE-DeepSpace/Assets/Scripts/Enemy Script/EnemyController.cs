@@ -84,7 +84,7 @@ public abstract class EnemyController : MonoBehaviour
             return;
         }
 
-        if (health - damage < 0)
+        if (health - damage <= 0)
         {
             health = 0;
 

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        Destroy(gameObject, 10);
+    }
+
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
     /// object (2D physics only).
