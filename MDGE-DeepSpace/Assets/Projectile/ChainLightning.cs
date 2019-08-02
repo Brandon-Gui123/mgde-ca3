@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChainBeam : Projectile
+public class ChainLightning : Projectile
 {
     //ProjectileProperties
     public float projectileDamage = 1f;
     public float projectileDamageRate = 0.5f;
     public float projectileLifetime = 5f;
+    public float projectileSpeed = 10f;
     public Animator animator;
     
     LineRenderer beamRenderer;
@@ -45,6 +46,7 @@ public class ChainBeam : Projectile
         } else {
             DrawBeamBranch(transform.position, 0, 1);
         }
+        transform.position += transform.up * projectileSpeed * Time.deltaTime;
     }
 
     IEnumerator UnRender(float time) {

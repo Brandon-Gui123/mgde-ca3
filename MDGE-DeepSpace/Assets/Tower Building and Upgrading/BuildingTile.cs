@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapToOpenUI : MonoBehaviour
+public class BuildingTile : MonoBehaviour
 {
+    [HideInInspector]
+    public bool hasTower = false;
+
     public List<GameObject> ListOfButtons = new List<GameObject>();
     public float buttonAngleSpacing = 30f;
     public float distanceFromOrigin = 2f;
@@ -48,14 +51,16 @@ public class TapToOpenUI : MonoBehaviour
                     
             }
         }
-        
-        if (openUI) {
-            ShowButtons();
-            StartCoroutine(ToggleButtonActive(true));
-        } else {
-            HideButtons();
-            StartCoroutine(ToggleButtonActive(openUI));
+        if (!hasTower) {
+            if (openUI) {
+                ShowButtons();
+                StartCoroutine(ToggleButtonActive(true));
+            } else {
+                HideButtons();
+                StartCoroutine(ToggleButtonActive(openUI));
+            }
         }
+        
     }
 
 
