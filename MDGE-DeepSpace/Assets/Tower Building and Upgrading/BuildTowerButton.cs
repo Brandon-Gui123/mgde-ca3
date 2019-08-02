@@ -6,7 +6,7 @@ public class BuildTowerButton : MonoBehaviour
 {
     public Transform buildLocation;
 
-    public GameObject tower;
+    public GameObject towerPrefab;
 
     //if touch down and up on that button, build
 
@@ -27,16 +27,18 @@ public class BuildTowerButton : MonoBehaviour
                     }
                 }
             }
-            if (!isTouchingUIFlower && pleaseBuildATower) {
-                BuildTower(tower, buildLocation);
+            bool tileHasTower = buildLocation.GetComponent<BuildingTile>().hasTower;
+            if (!isTouchingUIFlower && pleaseBuildATower && !tileHasTower) {
+                BuildTower(towerPrefab, buildLocation);
             }
         }
     }
 
 
-    void BuildTower(GameObject tower, Transform buildLocation) {
-        Instantiate(tower, buildLocation);
+    void BuildTower(GameObject towerPrefab, Transform buildLocation) {
+        GameObject newTower = Instantiate(towerPrefab, buildLocation);
         buildLocation.GetComponent<BuildingTile>().hasTower = true;
-        Debug.Log("I build a tower" + gameObject.name);
+        buildLocation.GetComponent<BuildingTile>().tower = newTower;
+        Debug.Log("I built a tower called " + newTower.name);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SellTowerButton : MonoBehaviour
+public class UpgradeTowerButton : MonoBehaviour
 {
     public GameObject tower;
     
@@ -16,31 +16,32 @@ public class SellTowerButton : MonoBehaviour
         if (Input.touchCount > 0) {
             Touch[] tArr = Input.touches;
             bool isTouchingTurret = false;
-            bool pleaseSellTower = false;
+            bool pleaseUpgradeTower = false;
             for (int i = 0; i < tArr.Length; i++) {
                 RaycastHit2D[] hitInfo = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(tArr[i].position), transform.forward);
                 for (int h = 0; h < hitInfo.Length; h++) {
                     if (tArr[i].phase.Equals(TouchPhase.Began)) {
                         if (hitInfo[h].collider.gameObject.Equals(gameObject)) {
-                            pleaseSellTower = true;
+                            pleaseUpgradeTower = true;
                         } else if (hitInfo[h].collider.gameObject.Equals(tower)) {
                             isTouchingTurret = true;
                         }
                     }
                 }
             }
-            if (!isTouchingTurret && pleaseSellTower) {
-                SellTower();
+            if (!isTouchingTurret && pleaseUpgradeTower) {
+                UpgradeTower();
             }
         }
     }
-    void SellTower() {
+    void UpgradeTower() {
         if (tower) {
-            Destroy(tower);
-            buildLocation.GetComponent<BuildingTile>().hasTower = false;
-            Debug.Log("I sold a turret called " + tower.name);
+            Turret turretSettings = tower.GetComponent<Turret>();
+            turretSettings.range *= 1.1f;
+
+            Debug.Log("I upgraded a turret called " + tower.name);
         } else {
-            Debug.Log("SellButtonError: no turret to sell");
+            Debug.Log("UpgradeButtonError: no turret to upgrade");
         }
         
     }

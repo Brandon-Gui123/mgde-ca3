@@ -116,5 +116,5 @@ MonoBehaviour:
   projectileDamageRate: 0.5
   projectileLifetime: 5
   projectileSpeed: 10
-  animator: {fileID: 0}
+  animator: {fileID: 8652432337222297131}
   target: {fileID: 0}
