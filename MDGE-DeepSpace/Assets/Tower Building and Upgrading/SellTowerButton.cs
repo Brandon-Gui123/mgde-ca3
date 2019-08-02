@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SellTowerButton : MonoBehaviour
 {
+    [HideInInspector]
     public GameObject tower;
     
     public Transform buildLocation;

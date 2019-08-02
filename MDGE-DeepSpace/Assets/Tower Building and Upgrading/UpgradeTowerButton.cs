@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class UpgradeTowerButton : MonoBehaviour
 {
+    [HideInInspector]
     public GameObject tower;
-    
+
     public Transform buildLocation;
-    
-    void Update()
-    {
+
+    public List<Sprite> UpgradeButtonSpriteTiers = new List<Sprite>();
+    SpriteRenderer currentUpgradeButtonTierSprite;
+
+    int currentUpgradeTier = 0;
+
+    float baseUpgradeCost = 3f;
+
+    void Start() {
+        currentUpgradeButtonTierSprite = GetComponent<SpriteRenderer>();
+    }
+
+    void Update() {
         tower = buildLocation.GetComponent<BuildingTile>().tower;
 
 
@@ -37,12 +48,23 @@ public class UpgradeTowerButton : MonoBehaviour
     void UpgradeTower() {
         if (tower) {
             Turret turretSettings = tower.GetComponent<Turret>();
-            turretSettings.range *= 1.1f;
+            currentUpgradeTier++;
+            SetUpgradeButtonSprite(currentUpgradeTier);
+            //player's money -= tier * baseUpgradeCost
+            //turretSettings.range *= 1.1f;
 
             Debug.Log("I upgraded a turret called " + tower.name);
         } else {
             Debug.Log("UpgradeButtonError: no turret to upgrade");
         }
         
+    }
+    void SetUpgradeButtonSprite(int spriteTier) {
+        if (spriteTier < UpgradeButtonSpriteTiers.Count) {
+            currentUpgradeButtonTierSprite.sprite = UpgradeButtonSpriteTiers[spriteTier];
+        } else {
+            currentUpgradeButtonTierSprite.sprite = null;
+        }
+       
     }
 }

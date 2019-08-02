@@ -25,6 +25,10 @@ public class BuildingTile : MonoBehaviour
         ShowButtons(ListOfButtons);
         ShowButtons(ListOfUpgrades);
     }
+    void Start() {
+        HideButtons(ListOfButtons);
+        HideButtons(ListOfUpgrades);
+    }
 
     void Update() {
         if (Input.touchCount > 0) {
@@ -67,15 +71,15 @@ public class BuildingTile : MonoBehaviour
     }
 
 
-    void ShowButtons(List<GameObject> ListOfButtons) {
-        float angleMultiplier = -ListOfButtons.Count / 2f + 0.5f;
-        for (int i = 0; i < ListOfButtons.Count; i++) {
-            ListOfButtons[i].transform.position = Vector3.Lerp(ListOfButtons[i].transform.position, transform.position + Quaternion.AngleAxis(buttonAngleSpacing * (angleMultiplier + i), Vector3.back) * transform.up * distanceFromOrigin, Time.deltaTime * UICloseTime);
-            ListOfButtons[i].SetActive(true);
+    void ShowButtons(List<GameObject> listOfButtons) {
+        float angleMultiplier = -listOfButtons.Count / 2f + 0.5f;
+        for (int i = 0; i < listOfButtons.Count; i++) {
+            listOfButtons[i].transform.position = Vector3.Lerp(listOfButtons[i].transform.position, transform.position + Quaternion.AngleAxis(buttonAngleSpacing * (angleMultiplier + i), Vector3.back) * transform.up * distanceFromOrigin, Time.deltaTime * UICloseTime);
+            listOfButtons[i].SetActive(true);
         }
     }
-    void HideButtons(List<GameObject> ListOfButtons) {
-        foreach (GameObject g in ListOfButtons) {
+    void HideButtons(List<GameObject> listOfButtons) {
+        foreach (GameObject g in listOfButtons) {
             g.transform.position = Vector3.Lerp(g.transform.position, transform.position, Time.deltaTime * UIOpenTime);
             StartCoroutine(HideButton(g, 0.2f));
         }
