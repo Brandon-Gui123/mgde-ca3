@@ -39,6 +39,16 @@ public abstract class EnemyController : MonoBehaviour
     private bool isDead;
 
     /// <summary>
+    /// The reference to a wave manager script component in the scene.
+    /// This is used to allow destroyed enemies to decrement the total number of enemies
+    /// in the wave.
+    /// This is a better alternative to searching for every enemy using GameObject.Find, because
+    /// this is more performant.
+    /// </summary>
+    public WaveManager waveManager;
+
+
+    /// <summary>
     /// Determines the angle that the turret has to rotate in order to look at a given point.
     /// </summary>
     /// <param name="origin">The position of the turret.</param>
@@ -80,6 +90,12 @@ public abstract class EnemyController : MonoBehaviour
 
             //the enemy is dead
             isDead = true;
+
+            //decrement a value from the total number of enemies in the current wave
+            if (waveManager)
+            {
+                waveManager.DecrementEnemyQuantity();
+            }
 
             //execute callback function
             OnDie();

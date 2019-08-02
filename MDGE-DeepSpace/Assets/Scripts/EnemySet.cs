@@ -19,7 +19,8 @@ public class EnemySet
     public EnemyController enemyType;
 
     /// <summary>
-    /// The number of enemies to spawn.
+    /// The number of this kind of enemies to spawn.
     /// </summary>
-    public uint quantity;
+    [Min(0)]
+    public int quantity;
 }

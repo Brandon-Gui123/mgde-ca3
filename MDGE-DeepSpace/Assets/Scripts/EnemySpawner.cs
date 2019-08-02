@@ -46,11 +46,6 @@ public class EnemySpawner : MonoBehaviour
     private float spawnCountdown;
 
     /// <summary>
-    /// The <see cref="GameObject"/> that is used as an enemy.
-    /// </summary>
-    public GameObject enemy;
-
-    /// <summary>
     /// The sprite used for the map.
     /// </summary>
     private Sprite mapSprite;
@@ -59,6 +54,12 @@ public class EnemySpawner : MonoBehaviour
     /// The size of the spawn.
     /// </summary>
     private Vector2 spawnSize;
+
+    /// <summary>
+    /// A compact data type containing the type of enemy to spawn
+    /// and the number of enemies of that type to spawn.
+    /// </summary>
+    public List<EnemySet> enemySpawnSets;
 
     // Start is called before the first frame update
     private void Start()
@@ -75,9 +76,13 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canSpawn)
+        if (canSpawn && enemySpawnSets.Count > 0)
         {
             DoSpawningProcess();
+        }
+        else
+        {
+            //spawning has finished, alert the wave manager to move on to the next wave
         }
     }
 
@@ -113,7 +118,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector2 PickSpawnLocation()
     {
-        
+
         // Vector3 spawnSize = mapTransform.lossyScale + Vector3.one * extraDistance;
         Vector3 mapPosition = mapTransform.position;
 
@@ -172,6 +177,36 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         Vector2 spawnLocation = PickSpawnLocation();
-        Instantiate(enemy, spawnLocation, Quaternion.identity);
+
+        //pick a valid random enemy set
+        EnemySet pickedSet;
+
+        do
+        {
+            pickedSet = enemySpawnSets[Random.Range(0, enemySpawnSets.Count)];
+        } while (pickedSet.quantity <= 0);
+
+        //spawn the enemy in that set
+        EnemyController enemyInstance = Instantiate(pickedSet.enemyType, spawnLocation, Quaternion.identity);
+        enemyInstance.waveManager = WaveManager.waveManager;
+
+        //decrement the value
+        pickedSet.quantity--;
+
+        //if the quantity is less than or equal to 0, remove it from the list
+        if (pickedSet.quantity <= 0)
+        {
+            enemySpawnSets.Remove(pickedSet);
+        }
+
+    }
+
+    /// <summary>
+    /// Sets the set of enemies that this spawner will pick and spawn.
+    /// </summary>
+    /// <param name="wave">The wave whose enemy spawn set to use.</param>
+    public void SetSpawnPool(EnemyWave wave)
+    {
+        enemySpawnSets = new List<EnemySet>(wave.enemySets);
     }
 }
