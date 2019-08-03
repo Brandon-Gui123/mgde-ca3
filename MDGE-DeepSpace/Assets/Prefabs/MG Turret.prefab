@@ -112,7 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f20dbcdf1825314e9881c8947efebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
-  firingRate: 5
+  range: 8
+  enemyDetectionPeriod: 0.5
+  firingRate: 8
   bullet: {fileID: 8581804280644140685, guid: e805816742fca6e41a7705ef0d827245, type: 3}
   turretAnimator: {fileID: 5557148166739336293}

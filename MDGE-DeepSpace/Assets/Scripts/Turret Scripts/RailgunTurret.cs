@@ -57,6 +57,12 @@ public class RailgunTurret : Turret
     public float firingDuration;
 
     /// <summary>
+    /// The amount of damage to inflict to all enemies in the path of its fire
+    /// when this turret fires.
+    /// </summary>
+    public float damage;
+
+    /// <summary>
     /// A countdown where, at the end, the turret will fire.
     /// </summary>
     private float firingCountdown;
@@ -75,9 +81,10 @@ public class RailgunTurret : Turret
     private Animator turretAnimator;
 
     /// <summary>
-    /// Whether the coroutine <see cref="DetectEnemies(float)"/> is running.
+    /// The script component that handles the railgun bullet.
     /// </summary>
-    private bool enemyDetectionRunning = false;
+    [Header("Beam"), SerializeField]
+    private RailgunBullet railgunBullet;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -116,28 +123,27 @@ public class RailgunTurret : Turret
     void Update()
     {
 
-        if (target)
+        if (target && !target.IsDead)
         {
             //aim at the target
             AimAtTarget();
         }
+
+        Debug.Log(currentTurretState.ToString());
 
         switch (currentTurretState)
         {
             //the turret is neither charging up, nor firing, it is just there doing nothing, looking at the enemy (if there's one)
             case TurretState.Idle:
 
-                //start the coroutine, if it isn't running
-                if (!enemyDetectionRunning)
-                {
-                    StartCoroutine(DetectEnemies(enemyDetectionPeriod));
-                }
-
                 //move on to next state if there is a target and we have waited long enough
                 if (target && waitTimeCountdown <= 0)
                 {
                     //begin charging up!
                     currentTurretState = TurretState.ChargingUp;
+
+                    //reset charging up duration
+                    chargingCountdown = chargingDuration;
 
                     //set the trigger of the animator
                     turretAnimator.SetTrigger("Charge");
@@ -152,13 +158,6 @@ public class RailgunTurret : Turret
 
             //the turret is currently charging up a shot
             case TurretState.ChargingUp:
-
-                //stop the enemy detection coroutine from running so that we can lock on our target
-                if (enemyDetectionRunning)
-                {
-                    StopCoroutine(DetectEnemies(enemyDetectionPeriod));
-                    enemyDetectionRunning = false;
-                }
 
                 //start the charging countdown
                 chargingCountdown -= Time.deltaTime;
@@ -176,14 +175,14 @@ public class RailgunTurret : Turret
 
             case TurretState.Firing:
 
+                /**
                 //start the firing countdown
                 firingCountdown -= Time.deltaTime;
 
                 if (firingCountdown > 0)
                 {
-                    //this is where we fire the enemy I think
-                    //TODO: Insert You Jing's line renderer thingy here
-                    Debug.Log("Firing at enemy");
+                    //our railgun beam will be able to damage enemies
+                    beam.canDamageEnemies = true;
                 }
                 else
                 {
@@ -195,7 +194,30 @@ public class RailgunTurret : Turret
 
                     //set a cooldown time before it can charge up and fire again
                     waitTimeCountdown = waitTimeBeforeCharging;
+
+                    //our railgun beam will not be able to damage enemies
+                    beam.canDamageEnemies = false;
+
                 }
+                */
+
+                //fire the railgun bullet
+                FireRailgunBullet();
+
+                //damage all enemies caught in the bullet
+                foreach (EnemyController enemy in GetEnemiesInBeam())
+                {
+                    if (enemy)
+                    {
+                        enemy.Damage(damage);
+                    }
+                }
+
+                //go back to idle
+                currentTurretState = TurretState.Idle;
+
+                //reset wait duration
+                waitTimeCountdown = waitTimeBeforeCharging;
 
                 break;
         }
@@ -211,6 +233,9 @@ public class RailgunTurret : Turret
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
+    /// <summary>
+    /// Charges the railgun for its next attack.
+    /// </summary>
     private void ChargeUp()
     {
         //start counting down
@@ -223,5 +248,52 @@ public class RailgunTurret : Turret
             //set a trigger on the animator, which charges up an attack
             turretAnimator.SetTrigger("Charge");
         }
+    }
+
+    /// <summary>
+    /// Fires a visual railgun bullet towards the enemy.
+    /// </summary>
+    private void FireRailgunBullet()
+    {
+
+        RailgunBullet railgunBulletInstance = Instantiate(railgunBullet, transform.position, transform.rotation);
+
+        //attach values into the script component
+        railgunBullet.range = range;
+        railgunBullet.startPosition = transform.position;
+    }
+
+    /// <summary>
+    /// Gets all enemies that are caught in the firing range of the railgun.
+    /// </summary>
+    /// <returns>The <see cref="EnemyController"/> script component for each enemy.</returns>
+    private EnemyController[] GetEnemiesInBeam()
+    {
+        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(
+            transform.position,
+            transform.up,
+            range,
+            LayerMask.GetMask("Enemy")
+        );
+
+        //declare another array of the same length as the previous one to store
+        //the script component which we want to convert the colliders into
+        EnemyController[] enemyControllers = new EnemyController[hitInfos.Length];
+
+        for (int i = 0; i < hitInfos.Length; i++)
+        {
+            EnemyController currentEnemyController = hitInfos[i].collider.GetComponent<EnemyController>();
+
+            //enemies that are already dead (typically in their explosion animation)
+            //are not valid targets
+            if (currentEnemyController.IsDead)
+            {
+                continue;
+            }
+
+            enemyControllers[i] = currentEnemyController;
+        }
+
+        return enemyControllers;
     }
 }

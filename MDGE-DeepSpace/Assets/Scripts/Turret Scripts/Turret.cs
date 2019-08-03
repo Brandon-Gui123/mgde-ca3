@@ -11,9 +11,9 @@ public abstract class Turret : MonoBehaviour
     public float range;
 
     /// <summary>
-    /// The Transform of the target that this turret is focused on.
+    /// The EnemyController of the target that this turret is focused on.
     /// </summary>
-    protected Transform target;
+    protected EnemyController target;
 
     /// <summary>
     /// Checks for nearby enemies every specified seconds.
@@ -22,6 +22,11 @@ public abstract class Turret : MonoBehaviour
     /// </summary>
     [Tooltip("The duration between enemy detections. Lower values mean faster frequencies, but may hurt performance.")]
     public float enemyDetectionPeriod = 0.5f;
+
+    /// <summary>
+    /// Whether the coroutine <see cref="DetectEnemies(float)"/> is running.
+    /// </summary>
+    protected bool enemyDetectionRunning = false;
 
     /// <summary>
     /// A coroutine that runs at a specified interval.
@@ -33,13 +38,16 @@ public abstract class Turret : MonoBehaviour
     protected IEnumerator DetectEnemies(float interval)
     {
 
+        //the coroutine is running
+        enemyDetectionRunning = true;
+
         //infinte loop
         while (true)
         {
 
             //check for the nearest enemy
             target = GetNearestEnemy();
-
+            
             //suspend execution for 0.5 seconds
             yield return new WaitForSeconds(interval);
         }
@@ -49,7 +57,7 @@ public abstract class Turret : MonoBehaviour
     /// Gets the Transform of the enemy that is nearest to the turret.
     /// </summary>
     /// <returns>The Transform of the enemy that is nearest to the turret.</returns>
-    protected Transform GetNearestEnemy()
+    protected EnemyController GetNearestEnemy()
     {
         //get all enemy colliders in the overlapping circle
         Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Enemy"));
@@ -69,8 +77,14 @@ public abstract class Turret : MonoBehaviour
         foreach (Collider2D enemyCollider in enemyColliders)
         {
 
+            //ignore dead aliens
+            if (enemyCollider.GetComponent<EnemyController>().IsDead)
+            {
+                continue;
+            }
+
             //check the distance between the turret and the enemy collider
-            float distanceToTurret = Vector3.Distance(enemyCollider.transform.position, transform.position);
+            float distanceToTurret = Vector2.Distance(enemyCollider.transform.position, transform.position);
 
             //is the distance smaller than our calculated distance?
             if (distanceToTurret < closestDistanceToTurret)
@@ -84,7 +98,7 @@ public abstract class Turret : MonoBehaviour
         }
 
         //return the closest collider as a GameObject
-        return nearestCollider.transform;
+        return nearestCollider.GetComponent<EnemyController>();
     }
 
     /// <summary>
@@ -108,6 +122,6 @@ public abstract class Turret : MonoBehaviour
     /// </summary>
     protected void AimAtTarget()
     {
-        transform.rotation = Quaternion.Euler(0, 0, DetermineAngle(transform.position, target.position));
+        transform.rotation = Quaternion.Euler(0, 0, DetermineAngle(transform.position, target.transform.position));
     }
 }

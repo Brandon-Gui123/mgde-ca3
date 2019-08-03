@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7525703685964224446}
   - component: {fileID: 7525703685964224447}
   - component: {fileID: 4402544534866441480}
+  - component: {fileID: 381639306}
   m_Layer: 8
-  m_Name: Alien
+  m_Name: Alien (Shooter)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 21300000, guid: 8476dbdf4b84bbf4aa6550becf60ebbb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 9.02, y: 8.67}
   m_AdaptiveModeThreshold: 0.5
@@ -113,7 +114,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.9499999}
+  m_Offset: {x: -0.09999776, y: 0.8000004}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -124,5 +125,28 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.02, y: 6.7700005}
+  m_Size: {x: 8.42, y: 6.4700007}
   m_EdgeRadius: 0
+--- !u!114 &381639306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525703685964224444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ee63d1be1dd314b9a917ea9775db9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
+  reward: 5
+  player: {fileID: 0}
+  speed: 2
+  waveManager: {fileID: 0}
+  firingDistance: 7
+  firingRate: 2
+  shooterAnimator: {fileID: 7525703685964224447}
+  bullet: {fileID: 5036047008633845105, guid: 413392688ae2dea4e9f10ce30ccb0a47, type: 3}
+  damage: 5
