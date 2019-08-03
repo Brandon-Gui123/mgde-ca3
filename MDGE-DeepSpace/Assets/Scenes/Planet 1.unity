@@ -191,7 +191,7 @@ PrefabInstance:
     - target: {fileID: 1779924407157216301, guid: 20c03cde891bc6d43b8e4159d5d193f3,
         type: 3}
       propertyPath: m_Name
-      value: Staus Bar
+      value: Status Bar
       objectReference: {fileID: 0}
     - target: {fileID: 1779924407157216301, guid: 20c03cde891bc6d43b8e4159d5d193f3,
         type: 3}
