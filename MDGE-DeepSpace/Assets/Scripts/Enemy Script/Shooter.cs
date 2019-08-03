@@ -59,7 +59,15 @@ public class Shooter : EnemyController
     [SerializeField]
     private Animator shooterAnimator;
 
-    public GameObject bullet;
+    /// <summary>
+    /// The bullet that damages the player.
+    /// </summary>
+    public ShooterBullet bullet;
+
+    /// <summary>
+    /// The damage the bullet would deal to the player.
+    /// </summary>
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -143,8 +151,10 @@ public class Shooter : EnemyController
                     shooterAnimator.SetTrigger("Fire");
 
                     //tester bullet
-                    GameObject bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
-                    bulletInstance.GetComponent<Rigidbody2D>().velocity = transform.up * 4;
+                    ShooterBullet bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
+
+                    bulletInstance.GetComponent<Rigidbody2D>().velocity = transform.up * 3;
+                    bulletInstance.damage = damage;
 
                     //reset countdown
                     firingCountdown = 1 / firingRate;
