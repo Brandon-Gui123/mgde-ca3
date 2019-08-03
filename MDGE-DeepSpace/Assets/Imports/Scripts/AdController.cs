@@ -34,7 +34,7 @@ public class AdController : MonoBehaviour
     }
 
 
-    public void showBannerAdBtmCtr()
+    public void ShowBannerAdBtmCtr()
     {
         if (Advertisement.IsReady(banner_ad))
         {
@@ -42,7 +42,7 @@ public class AdController : MonoBehaviour
             Advertisement.Banner.Show(banner_ad);
         }
     }
-    public void showBannerAdTopRight()
+    public void ShowBannerAdTopRight()
     {
         if (Advertisement.IsReady(banner_ad))
         {
@@ -50,7 +50,7 @@ public class AdController : MonoBehaviour
             Advertisement.Banner.Show(banner_ad);
         }
     }
-    public void showBannerAdCenter()
+    public void ShowBannerAdCenter()
     {
         if (Advertisement.IsReady(banner_ad))
         {
@@ -59,7 +59,7 @@ public class AdController : MonoBehaviour
         }
     }
 
-    public void hideBannerAd()
+    public void HideBannerAd()
     {
         if (Advertisement.Banner.isLoaded)
         {
@@ -69,7 +69,7 @@ public class AdController : MonoBehaviour
         
     }
 
-    public void showInterstitialAd()
+    public void ShowInterstitialAd()
     {
         if (Advertisement.IsReady(interstitial_ad))
         {
