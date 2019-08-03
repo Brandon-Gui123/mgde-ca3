@@ -2534,6 +2534,7 @@ GameObject:
   - component: {fileID: 7849840166364836936}
   - component: {fileID: 7849840166364836937}
   - component: {fileID: 7849840166364836942}
+  - component: {fileID: 8589839662945259018}
   m_Layer: 5
   m_Name: Canvas Master True
   m_TagString: Untagged
@@ -2659,6 +2660,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 048c28a1467b2d54e9fa4ec959973ce5, type: 2}
+--- !u!114 &8589839662945259018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849840166364836943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638bd7ad43b0a6e44a40723c9bca845e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWinAchievement1: 0
+  isWinAchievement2: 0
+  isWinAchievement3: 0
+  frame1: {fileID: 7849840167554575651}
+  frame2: {fileID: 7849840167765009266}
+  frame3: {fileID: 7849840168263360640}
 --- !u!1 &7849840166378258577
 GameObject:
   m_ObjectHideFlags: 0
@@ -6207,7 +6226,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7849840167204805619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7849840166364836937}
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8589839662945259018}
+        m_MethodName: SaveAchievementInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &7849840167346639365
@@ -8845,6 +8886,17 @@ MonoBehaviour:
       - m_Target: {fileID: 7849840168055872099}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8589839662945259018}
+        m_MethodName: setAchievementFrames
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
