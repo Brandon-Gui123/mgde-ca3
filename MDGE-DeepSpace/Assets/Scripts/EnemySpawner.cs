@@ -80,10 +80,6 @@ public class EnemySpawner : MonoBehaviour
         {
             DoSpawningProcess();
         }
-        else
-        {
-            //spawning has finished, alert the wave manager to move on to the next wave
-        }
     }
 
     private void OnDrawGizmos()

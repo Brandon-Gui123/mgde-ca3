@@ -123,7 +123,7 @@ public class RailgunTurret : Turret
     void Update()
     {
 
-        if (target)
+        if (target && !target.IsDead)
         {
             //aim at the target
             AimAtTarget();
@@ -231,8 +231,6 @@ public class RailgunTurret : Turret
         //draw a wire sphere around the turret showing its range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
-
-        Debug.Log("Hello world!");
     }
 
     /// <summary>

@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class MGBullet : Projectile
 {
+
+    /// <summary>
+    /// The amount of damage to deal to the enemy that was hit.
+    /// </summary>
+    [HideInInspector]
+    public float damage;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -11,7 +17,8 @@ public class Bullet : MonoBehaviour
     /// </summary>
     void Start()
     {
-        Destroy(gameObject, 10);
+        //destroy itself after 5 seconds
+        Destroy(gameObject, 5);
     }
 
     /// <summary>
@@ -21,10 +28,15 @@ public class Bullet : MonoBehaviour
     /// <param name="other">The other Collider2D involved in this collision.</param>
     void OnTriggerEnter2D(Collider2D other)
     {
+        //deal damage to the enemy we collided with
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.GetComponent<EnemyController>().Damage(10);
+            //damage the enemy
+            other.GetComponent<EnemyController>().Damage(damage);
+
+            //destroy the bullet
             Destroy(gameObject);
         }
     }
+
 }

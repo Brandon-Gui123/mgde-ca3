@@ -7,8 +7,6 @@ using System;
 public class WaveManager : MonoBehaviour
 {
 
-    //TODO: Add documentation
-
     /// <summary>
     /// A static reference to a WaveManager script component in the current scene.
     /// This is used for all enemies to easily refer to this and perform actions
@@ -96,6 +94,8 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //the level is complete when we have no more waves 
+        //and there are no more enemies in the current wave
         if (enemyWaves.Count <= 0 && numEnemiesInCurrentWave <= 0)
         {
             Debug.Log("Level complete!");
@@ -127,16 +127,18 @@ public class WaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Dequeues the next wave and starts in.
+    /// Dequeues the next wave and starts it.
     /// </summary>
     void StartWave()
     {
         currentEnemyWave = enemyWaves.Dequeue();
 
         //get the total number of enemies in that wave
+        //which will be decremented upon each enemy death
         numEnemiesInCurrentWave = currentEnemyWave.GetTotalNumberOfEnemies();
 
         //pass the wave to the enemy spawner
+        //for it to spawn
         enemySpawner.SetSpawnPool(currentEnemyWave);
     }
 

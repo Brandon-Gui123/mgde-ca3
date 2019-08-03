@@ -112,11 +112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cb2ea1c183bfa4a90d80c365a1f94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 20
   enemyDetectionPeriod: 0.5
-  waitTimeBeforeCharging: 0.5
+  waitTimeBeforeCharging: 1
   chargingDuration: 1
-  firingDuration: 1
+  firingDuration: 0.1
   damage: 50
   turretAnimator: {fileID: 2641709805036802686}
   railgunBullet: {fileID: 7668169487917000028, guid: 99eee47dde58c9842901e455890a4ff0,
