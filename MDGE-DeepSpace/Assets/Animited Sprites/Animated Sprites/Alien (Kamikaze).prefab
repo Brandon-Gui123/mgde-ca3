@@ -145,8 +145,8 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 1
   waveManager: {fileID: 0}
-  stoppingDistance: 0.5
+  stoppingDistance: 4
   fuseTime: 1
   kamikazeAnimator: {fileID: 7636936962114560929}
-  explosionRadius: 5
+  explosionRadius: 6
   maxDamage: 25
