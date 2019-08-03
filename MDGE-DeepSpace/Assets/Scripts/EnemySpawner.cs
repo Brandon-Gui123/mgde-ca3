@@ -46,22 +46,37 @@ public class EnemySpawner : MonoBehaviour
     private float spawnCountdown;
 
     /// <summary>
-    /// The <see cref="GameObject"/> that is used as an enemy.
+    /// The sprite used for the map.
     /// </summary>
-    public GameObject enemy;
-
     private Sprite mapSprite;
+
+    /// <summary>
+    /// The size of the spawn.
+    /// </summary>
+    private Vector2 spawnSize;
+
+    /// <summary>
+    /// A compact data type containing the type of enemy to spawn
+    /// and the number of enemies of that type to spawn.
+    /// </summary>
+    public List<EnemySet> enemySpawnSets;
 
     // Start is called before the first frame update
     private void Start()
     {
-        
+        mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
+
+        //calculate the spawn size
+        spawnSize = new Vector2(
+                mapSprite.rect.width / mapSprite.pixelsPerUnit * mapTransform.lossyScale.x,
+                mapSprite.rect.height / mapSprite.pixelsPerUnit * mapTransform.lossyScale.y
+            ) + Vector2.one * extraDistance;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (canSpawn)
+        if (canSpawn && enemySpawnSets.Count > 0)
         {
             DoSpawningProcess();
         }
@@ -69,16 +84,38 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+
+        if (!mapSprite)
+        {
+            mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
+        }
+
         //draw a the outline of a rectangle showing where enemies will spawn
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(mapTransform.position, mapTransform.lossyScale + Vector3.one * extraDistance);
+        Gizmos.DrawWireCube(mapTransform.position, spawnSize);
+    }
+
+    /// <summary>
+    /// Called when the script is loaded or a value is changed in the
+    /// inspector (Called in the editor only).
+    /// </summary>
+    void OnValidate()
+    {
+        if (!mapSprite)
+        {
+            mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
+        }
+
+        spawnSize = new Vector2(
+                mapSprite.rect.width / mapSprite.pixelsPerUnit * mapTransform.lossyScale.x,
+                mapSprite.rect.height / mapSprite.pixelsPerUnit * mapTransform.lossyScale.y
+            ) + Vector2.one * extraDistance;
     }
 
     private Vector2 PickSpawnLocation()
     {
 
-        //calculate map size and map position
-        Vector3 spawnSize = mapTransform.lossyScale + Vector3.one * extraDistance;
+        // Vector3 spawnSize = mapTransform.lossyScale + Vector3.one * extraDistance;
         Vector3 mapPosition = mapTransform.position;
 
         //choose which side of the rectangle to spawn
@@ -126,6 +163,9 @@ public class EnemySpawner : MonoBehaviour
         if (spawnCountdown <= 0)
         {
             SpawnEnemy();
+
+            //reset countdown
+            spawnCountdown = delayPerSpawn;
         }
 
     }
@@ -133,6 +173,36 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         Vector2 spawnLocation = PickSpawnLocation();
-        Instantiate(enemy, spawnLocation, Quaternion.identity);
+
+        //pick a valid random enemy set
+        EnemySet pickedSet;
+
+        do
+        {
+            pickedSet = enemySpawnSets[Random.Range(0, enemySpawnSets.Count)];
+        } while (pickedSet.quantity <= 0);
+
+        //spawn the enemy in that set
+        EnemyController enemyInstance = Instantiate(pickedSet.enemyType, spawnLocation, Quaternion.identity);
+        enemyInstance.waveManager = WaveManager.waveManager;
+
+        //decrement the value
+        pickedSet.quantity--;
+
+        //if the quantity is less than or equal to 0, remove it from the list
+        if (pickedSet.quantity <= 0)
+        {
+            enemySpawnSets.Remove(pickedSet);
+        }
+
+    }
+
+    /// <summary>
+    /// Sets the set of enemies that this spawner will pick and spawn.
+    /// </summary>
+    /// <param name="wave">The wave whose enemy spawn set to use.</param>
+    public void SetSpawnPool(EnemyWave wave)
+    {
+        enemySpawnSets = new List<EnemySet>(wave.enemySets);
     }
 }

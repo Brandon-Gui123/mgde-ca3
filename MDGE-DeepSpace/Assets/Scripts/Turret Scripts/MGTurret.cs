@@ -17,9 +17,14 @@ public class MGTurret : Turret
     private float firingCountdown;
 
     /// <summary>
+    /// The amount of damage that each round of this bullet can deal to an enemy.
+    /// </summary>
+    public float damage = 8;
+
+    /// <summary>
     /// The GameObject to be treated as the bullet.
     /// </summary>
-    public GameObject bullet;
+    public MGBullet bullet;
 
     /// <summary>
     /// The Animator component responsible for animating this turret.
@@ -43,7 +48,7 @@ public class MGTurret : Turret
     // Update is called once per frame
     void Update()
     {
-        if (target)
+        if (target && !target.IsDead)
         {
             //aim at the target
             AimAtTarget();
@@ -84,10 +89,13 @@ public class MGTurret : Turret
         if (firingCountdown <= 0)
         {
             //fire a bullet at a specified speed towards the target
-            GameObject bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
+            MGBullet bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
 
             //apply a velocity to the bullet
-            bulletInstance.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
+            bulletInstance.gameObject.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
+
+            //apply damage
+            bulletInstance.damage = damage;
 
             //reset countdown
             firingCountdown = 1 / firingRate;

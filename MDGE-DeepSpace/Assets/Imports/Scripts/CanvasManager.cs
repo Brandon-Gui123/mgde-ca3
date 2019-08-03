@@ -5,24 +5,25 @@ using TMPro;
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
-{//This canvas creates a simpleton which guides canvas through all scenes, handles event logics such as scene change, 
+{
+    //This canvas creates a simpleton which guides canvas through all scenes, handles event logics such as scene change, 
     //set UI active and disable UI
     private static CanvasManager Instance;
 
     public GameObject pauseMenuUI; //pause menu in game level
     public GameObject pauseButtonUI; //button to pause
     public GameObject mainMenuUI; //main menu in start menu
-    
+
     public GameObject gameOverUI; //game over when player is dead 
     public GameObject OptionsMenuUI; //options menu
-   
+
 
     public bool GameIsPause = false;
     //public GameObject joystickUI;
 
-   
-    
-    
+
+
+
     private void Awake()
     {
         if (Instance != null)
@@ -46,11 +47,11 @@ public class CanvasManager : MonoBehaviour
         {
             mainMenuUI.SetActive(false);
             pauseButtonUI.SetActive(true);
-           
+
         }
         else
         {
-            print("Main Menu : "  + mainMenuUI.activeSelf);
+            print("Main Menu : " + mainMenuUI.activeSelf);
             mainMenuUI.SetActive(true);
             pauseButtonUI.SetActive(false);
             print("Main Menu : " + mainMenuUI.activeSelf);
@@ -65,9 +66,9 @@ public class CanvasManager : MonoBehaviour
         //Note: Turning off option page is already set in Option buttion using Unity setactive.
         if (SceneManager.GetActiveScene().buildIndex == 0 && mainMenuUI.activeSelf == false) //in menu and menuPage is turned off
         {
-         
+
             mainMenuUI.SetActive(true); //turn on menu page and turn off option page
-            
+
         }
 
         if (SceneManager.GetActiveScene().buildIndex != 0 && pauseMenuUI.activeSelf == false) //in level and pause page is turned off, we want to set opposite
@@ -78,16 +79,16 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
-    public  void setGameOverScreen() //sets game over screen to true
+    public void setGameOverScreen() //sets game over screen to true
     {
         gameOverUI.SetActive(true);
     }
 
-  
+
 
     private Gyroscope gyro; //use class Gyroscope for calibration
-  
-   
+
+
     public void setTimeScale(int timeScale) //allows setting of desired timescale.
     {
         Time.timeScale = timeScale;
@@ -100,7 +101,7 @@ public class CanvasManager : MonoBehaviour
     public void QuitGame() { Application.Quit(); } //quit app
 
     public void ReloadScene() { SceneManager.LoadScene(SceneManager.GetActiveScene().name); pauseMenuUI.SetActive(false); } //reset scne
-   
+
 
     public void Resume() // Resumes game play
     {
@@ -136,7 +137,7 @@ public class CanvasManager : MonoBehaviour
         //{
 
         //}
-    
+
 
     }
 

@@ -2,18 +2,29 @@ using UnityEngine;
 
 public abstract class EnemyController : MonoBehaviour
 {
-    //TODO: Add stuff common in all enemies
+    /// <summary>
+    /// The maximum amount of health that this enemy can have.
+    /// </summary>
+    [Header("Common Enemy Properties")]
+    public float maxHealth = 100;
 
     /// <summary>
     /// The amount of health this enemy has.
+    /// The enemy will die if its health reaches 0.
     /// </summary>
     public float health = 100;
+
+    /// <summary>
+    /// The amount of money the enemy will award when it gets destroyed.
+    /// </summary>
+    public int reward = 5;
 
     /// <summary>
     /// The Transform component of the player.
     /// This will be the target of all enemies.
     /// We use Transform so we can access the player's position directly.
     /// </summary>
+    [Space]
     public Transform player;
 
     /// <summary>
@@ -25,6 +36,24 @@ public abstract class EnemyController : MonoBehaviour
     /// The script component responsible for handling player health calculations.
     /// </summary>
     protected Player_Health_Script playerHealthScript;
+
+    /// <summary>
+    /// Obtains or sets (child classes only) the boolean responsible for giving information
+    /// on whether this enemy died or not.
+    /// </summary>
+    /// <value>Is this enemy dead?</value>
+    public bool IsDead { get; protected set; }
+
+    /// <summary>
+    /// The reference to a wave manager script component in the scene.
+    /// This is used to allow destroyed enemies to decrement the total number of enemies
+    /// in the wave.
+    /// This is a better alternative to searching for every enemy using GameObject.Find, because
+    /// this is more performant.
+    /// </summary>
+    [HideInInspector]
+    public WaveManager waveManager;
+
 
     /// <summary>
     /// Determines the angle that the turret has to rotate in order to look at a given point.
@@ -48,5 +77,52 @@ public abstract class EnemyController : MonoBehaviour
     protected void AimAtTarget()
     {
         transform.rotation = Quaternion.Euler(0, 0, DetermineAngle(transform.position, player.position));
+    }
+
+    /// <summary>
+    /// Damages the enemy.
+    /// </summary>
+    /// <param name="damage">The amount of damage to apply to the enemy.</param>
+    public void Damage(float damage)
+    {
+        //no need to damage the enemy since it is already dead
+        if (IsDead)
+        {
+            return;
+        }
+
+        if (health - damage <= 0)
+        {
+            health = 0;
+
+            //the enemy is dead
+            IsDead = true;
+
+            //award the player some money
+            GameManager.gameManager.money += reward;
+
+            //execute callback function
+            OnDie();
+        }
+        else
+        {
+            health -= damage;
+        }
+    }
+
+    /// <summary>
+    /// Callback function that gets called when the enemy's health reaches 0.
+    /// </summary>
+    protected abstract void OnDie();
+
+    /// <summary>
+    /// This function is called when the MonoBehaviour will be destroyed.
+    /// </summary>
+    void OnDestroy()
+    {
+        if (waveManager)
+        {
+            waveManager.DecrementEnemyQuantity();
+        }
     }
 }

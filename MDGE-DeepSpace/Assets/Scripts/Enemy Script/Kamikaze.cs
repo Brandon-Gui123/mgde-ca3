@@ -21,10 +21,16 @@ public class Kamikaze : EnemyController
         Purusing,
 
         /// <summary>
-        /// The enemy has started its countdown timer and is about to explode
-        /// if the player doesn't move away (or if some other condition is not met).
+        /// The enemy has started its countdown timer and is charging itself up.
+        /// The enemy will then explode after.
         /// </summary>
-        AboutToExplode
+        ChargingUp,
+
+        /// <summary>
+        /// The enemy is dead.
+        /// This is the state where the enemy explodes.
+        /// </summary>
+        Dead
     }
 
     /// <summary>
@@ -36,6 +42,7 @@ public class Kamikaze : EnemyController
     /// <summary>
     /// The distance that the enemy will stop at before it blows up.
     /// </summary>
+    [Header("Kamikaze Properties")]
     public float stoppingDistance;
 
     /// <summary>
@@ -50,6 +57,24 @@ public class Kamikaze : EnemyController
     /// the enemy explodes.
     /// </summary>
     private float fuseCountdown;
+
+    /// <summary>
+    /// The Animator component responsible for animating the enemy.
+    /// </summary>
+    [SerializeField]
+    private Animator kamikazeAnimator;
+
+    /// <summary>
+    /// How far will the explosion affect the player?
+    /// If the player is outside of this distance, the explosion damage would be minimal.
+    /// </summary>
+    public float explosionRadius;
+
+    /// <summary>
+    /// The maximum amount of damage that the Kamikaze can deal to the player.
+    /// This is the damage that would be dealt if the player is at the same position as the kamikaze.
+    /// </summary>
+    public float maxDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +96,9 @@ public class Kamikaze : EnemyController
 
         //all kamikazes have their fuse timings at their initial values
         fuseCountdown = fuseTime;
+
+        //adjust the fuse time of the animator
+        kamikazeAnimator.SetFloat("fuseTime", 1 / fuseTime);
     }
 
     // Update is called once per frame
@@ -81,6 +109,7 @@ public class Kamikaze : EnemyController
 
             //the AI isn't doing anything huge
             case AIState.Idle:
+
                 //because we are always pursuing our target, simply move on to the next state
                 if (player)
                 {
@@ -90,6 +119,7 @@ public class Kamikaze : EnemyController
 
             //the AI is currently pursuing the player
             case AIState.Purusing:
+
                 //aim at the target and move towards it
                 AimAtTarget();
                 transform.Translate(Vector3.up * speed * Time.deltaTime); //this is relative to the object
@@ -98,48 +128,63 @@ public class Kamikaze : EnemyController
                 if (Vector2.Distance(transform.position, player.position) <= stoppingDistance)
                 {
                     //move on to next state
-                    currentAIState = AIState.AboutToExplode;
+                    currentAIState = AIState.ChargingUp;
+
+                    //start the animation for charging up
+                    kamikazeAnimator.SetTrigger("Die");
                 }
 
                 break;
 
             //the AI is about to explode
-            case AIState.AboutToExplode:
-
-                //did the player move out of our stopping distance?
-                if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
-                {
-                    //go back to previous state to move closer to the player
-                    currentAIState = AIState.Purusing;
-
-                    //reset countdown
-                    fuseCountdown = fuseTime;
-                }
+            case AIState.ChargingUp:
 
                 //countdown the explosion
                 fuseCountdown -= Time.deltaTime;
 
                 if (fuseCountdown <= 0)
                 {
-                    //we now explode
-                    Debug.Log("Explode!");
+                    //move on to the dying state
+                    currentAIState = AIState.Dead;
+
+                    //deal damage to the player based on how close he is
+                    float distFromPlayer = Vector3.Distance(transform.position, player.position);
+
+                    if (distFromPlayer <= explosionRadius)
+                    {
+                        float damageDealt = Mathf.Lerp(maxDamage, 0, distFromPlayer / explosionRadius);
+                        Debug.Log("Damage dealt: " + damageDealt);
+                    }
+                }
+
+                break;
+
+            //the AI is exploding
+            case AIState.Dead:
+
+                AnimatorStateInfo currentAnimatorStateInfo = kamikazeAnimator.GetCurrentAnimatorStateInfo(0);
+
+                if (currentAnimatorStateInfo.normalizedTime >= 1 && currentAnimatorStateInfo.IsName("Alien 2 Explosion"))
+                {
                     Destroy(gameObject);
                 }
 
                 break;
+
         }
     }
 
-    /**
-    void OnTriggerEnter2D(Collider2D collider)
+    /// <summary>
+    /// Callback function called when the Kamikaze dies.
+    /// </summary>
+    protected override void OnDie()
     {
-        print("Player has been Kamikazed!");
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            playerHealthScript.playerDamaged(damage);
-            Destroy(this.gameObject);
-        }
+        //transit the state where it charges up and explodes
+        currentAIState = AIState.ChargingUp;
+
+        //trigger the animation for charging up
+        //(after which it will transit to the dying animation)
+        kamikazeAnimator.SetTrigger("Die");
 
     }
-    */
 }
