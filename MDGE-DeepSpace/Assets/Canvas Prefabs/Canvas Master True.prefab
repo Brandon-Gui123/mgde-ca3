@@ -1131,7 +1131,7 @@ GameObject:
   - component: {fileID: 7849840166364836937}
   - component: {fileID: 7849840166364836942}
   m_Layer: 5
-  m_Name: Canvas Master 1
+  m_Name: Canvas Master True
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1392,14 +1392,14 @@ RectTransform:
   m_GameObject: {fileID: 7849840166428329916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9875, y: 1.05, z: 1}
+  m_LocalScale: {x: 0.94985163, y: 0.99749994, z: 1}
   m_Children: []
   m_Father: {fileID: 7849840167758751028}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 138.3, y: -121.13}
+  m_AnchoredPosition: {x: 133, y: -121.13}
   m_SizeDelta: {x: 239.3, y: 135.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7849840166428329913
@@ -1559,7 +1559,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7849840166491729736
@@ -3193,7 +3193,7 @@ RectTransform:
   m_GameObject: {fileID: 7849840166814354493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0125, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7849840167758751028}
   m_RootOrder: 1
@@ -8463,16 +8463,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7849840166364836949}
     m_Modifications:
-    - target: {fileID: 5175470526520098975, guid: 4af4c535a96083e4d888340d5d38b10f,
-        type: 3}
-      propertyPath: m_Name
-      value: Pause Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175470526520098975, guid: 4af4c535a96083e4d888340d5d38b10f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5175470526520098971, guid: 4af4c535a96083e4d888340d5d38b10f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8577,6 +8567,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175470526520098975, guid: 4af4c535a96083e4d888340d5d38b10f,
+        type: 3}
+      propertyPath: m_Name
+      value: Pause Button
       objectReference: {fileID: 0}
     - target: {fileID: 5175470526520098974, guid: 4af4c535a96083e4d888340d5d38b10f,
         type: 3}

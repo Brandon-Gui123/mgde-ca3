@@ -377,11 +377,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7849840166475028639, guid: 8249e2408eb7dc240a4f316b78008ae1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7849840167803813085, guid: 8249e2408eb7dc240a4f316b78008ae1,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -441,26 +436,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849840166428329919, guid: 8249e2408eb7dc240a4f316b78008ae1,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.99749994
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849840166428329919, guid: 8249e2408eb7dc240a4f316b78008ae1,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.94985163
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849840166428329919, guid: 8249e2408eb7dc240a4f316b78008ae1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 133
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849840166814354492, guid: 8249e2408eb7dc240a4f316b78008ae1,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8249e2408eb7dc240a4f316b78008ae1, type: 3}
