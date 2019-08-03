@@ -1190,6 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c88c0cac48d40745be81df787e6ecf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  money: 0
 --- !u!4 &536282985
 Transform:
   m_ObjectHideFlags: 0
@@ -1975,7 +1976,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3713,8 +3714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySets:
-  - enemyType: {fileID: 381639306, guid: f02f977ac15e80d4987cfaf4cec6e60a, type: 3}
-    quantity: 25
+  - enemyType: {fileID: 13384276, guid: c3106b7d07866d7478a3c7c430019702, type: 3}
+    quantity: 5
 --- !u!1 &2084810970
 GameObject:
   m_ObjectHideFlags: 0

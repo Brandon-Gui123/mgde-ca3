@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// A static reference to the GameManager script component.
+    /// </summary>
+    public static GameManager gameManager;
+
+    /// <summary>
+    /// The amount of money the player has.
+    /// Used for upgrading and building turrets, and is awarded when enemies are killed.
+    /// </summary>
+    public int money = 0;
+
     CanvasManager sceneController;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = this;
+        
         sceneController = FindObjectOfType<CanvasManager>();
     }
 

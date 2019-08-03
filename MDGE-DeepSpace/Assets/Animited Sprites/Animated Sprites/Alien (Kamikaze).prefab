@@ -92,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 7636936962114560928}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b77e327e7aa668c4db0a7bfc9ecf6254, type: 2}
+  m_Controller: {fileID: 9100000, guid: 23f0fdd0c729d8a41a2bf7dd33536020, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -139,8 +139,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7a822e4fb51684b8353a428c4b680e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   health: 100
+  reward: 10
   player: {fileID: 0}
-  speed: 2
-  stoppingDistance: 1
-  fuseTime: 2
+  speed: 1
+  waveManager: {fileID: 0}
+  stoppingDistance: 0.5
+  fuseTime: 1
+  kamikazeAnimator: {fileID: 7636936962114560929}
+  explosionRadius: 5
+  maxDamage: 25

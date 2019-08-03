@@ -15,10 +15,16 @@ public abstract class EnemyController : MonoBehaviour
     public float health = 100;
 
     /// <summary>
+    /// The amount of money the enemy will award when it gets destroyed.
+    /// </summary>
+    public int reward = 5;
+
+    /// <summary>
     /// The Transform component of the player.
     /// This will be the target of all enemies.
     /// We use Transform so we can access the player's position directly.
     /// </summary>
+    [Space]
     public Transform player;
 
     /// <summary>
@@ -45,6 +51,7 @@ public abstract class EnemyController : MonoBehaviour
     /// This is a better alternative to searching for every enemy using GameObject.Find, because
     /// this is more performant.
     /// </summary>
+    [HideInInspector]
     public WaveManager waveManager;
 
 
@@ -91,11 +98,8 @@ public abstract class EnemyController : MonoBehaviour
             //the enemy is dead
             IsDead = true;
 
-            //decrement a value from the total number of enemies in the current wave
-            if (waveManager)
-            {
-                waveManager.DecrementEnemyQuantity();
-            }
+            //award the player some money
+            GameManager.gameManager.money += reward;
 
             //execute callback function
             OnDie();
@@ -110,4 +114,15 @@ public abstract class EnemyController : MonoBehaviour
     /// Callback function that gets called when the enemy's health reaches 0.
     /// </summary>
     protected abstract void OnDie();
+
+    /// <summary>
+    /// This function is called when the MonoBehaviour will be destroyed.
+    /// </summary>
+    void OnDestroy()
+    {
+        if (waveManager)
+        {
+            waveManager.DecrementEnemyQuantity();
+        }
+    }
 }
