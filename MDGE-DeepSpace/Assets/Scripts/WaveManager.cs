@@ -18,6 +18,12 @@ public class WaveManager : MonoBehaviour
     public static WaveManager waveManager;
 
     /// <summary>
+    /// The current wave number.
+    /// </summary>
+    /// <value>The current wave number.</value>
+    public static int CurrentWaveNumber { get; private set; } = 0;
+
+    /// <summary>
     /// A first-in first-out collection of wave objects that depict what kinds of enemies will appear
     /// on the wave and how many of them will appear.
     /// We use a Queue because it is easy to obtain the next wave by simply dequeuing it.
@@ -58,6 +64,19 @@ public class WaveManager : MonoBehaviour
     /// </summary>
     private float delayBetweenWavesCountdown;
 
+    /// <summary>
+    /// A boolean indicating if we have incremented the current wave number.
+    /// Helps to prevent stuff from being called more than once.
+    /// </summary>
+    private bool currentWaveNumberIncremented;
+
+    /// <summary>
+    /// The animator responsible for animating the wave alerter.
+    /// Used to trigger animations.
+    /// </summary>
+    [SerializeField]
+    private Animator waveAlerterAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,12 +106,21 @@ public class WaveManager : MonoBehaviour
             if (numEnemiesInCurrentWave <= 0)
             {
 
+                if (!currentWaveNumberIncremented)
+                {
+                    CurrentWaveNumber++;
+                    currentWaveNumberIncremented = true;
+
+                    waveAlerterAnimator.SetTrigger("Alert");
+                }
+
                 delayBetweenWavesCountdown -= Time.deltaTime;
 
                 if (delayBetweenWavesCountdown <= 0)
                 {
                     StartWave();
                     delayBetweenWavesCountdown = delayBetweenWaves;
+                    currentWaveNumberIncremented = false;
                 }
             }
         }
@@ -110,7 +138,6 @@ public class WaveManager : MonoBehaviour
 
         //pass the wave to the enemy spawner
         enemySpawner.SetSpawnPool(currentEnemyWave);
-
     }
 
     /// <summary>
