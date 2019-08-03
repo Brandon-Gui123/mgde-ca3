@@ -32,11 +32,11 @@ public abstract class EnemyController : MonoBehaviour
     protected Player_Health_Script playerHealthScript;
 
     /// <summary>
-    /// Whether this enemy is dead.
-    /// We use this to prevent further damage from causing additional calls
-    /// of <see cref="OnDamage"/>.
+    /// Obtains or sets (child classes only) the boolean responsible for giving information
+    /// on whether this enemy died or not.
     /// </summary>
-    private bool isDead;
+    /// <value>Is this enemy dead?</value>
+    public bool IsDead { get; protected set; }
 
     /// <summary>
     /// The reference to a wave manager script component in the scene.
@@ -79,7 +79,7 @@ public abstract class EnemyController : MonoBehaviour
     public void Damage(float damage)
     {
         //no need to damage the enemy since it is already dead
-        if (isDead)
+        if (IsDead)
         {
             return;
         }
@@ -89,7 +89,7 @@ public abstract class EnemyController : MonoBehaviour
             health = 0;
 
             //the enemy is dead
-            isDead = true;
+            IsDead = true;
 
             //decrement a value from the total number of enemies in the current wave
             if (waveManager)

@@ -47,6 +47,7 @@ public abstract class Turret : MonoBehaviour
 
             //check for the nearest enemy
             target = GetNearestEnemy();
+            
             //suspend execution for 0.5 seconds
             yield return new WaitForSeconds(interval);
         }
