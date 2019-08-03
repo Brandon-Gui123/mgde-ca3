@@ -115,5 +115,6 @@ MonoBehaviour:
   range: 8
   enemyDetectionPeriod: 0.5
   firingRate: 8
-  bullet: {fileID: 8581804280644140685, guid: e805816742fca6e41a7705ef0d827245, type: 3}
+  damage: 8
+  bullet: {fileID: 8039586894464608739, guid: e805816742fca6e41a7705ef0d827245, type: 3}
   turretAnimator: {fileID: 5557148166739336293}
