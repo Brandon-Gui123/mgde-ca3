@@ -5,6 +5,8 @@ using UnityEngine;
 public class Kamikaze : EnemyController
 {
 
+    public AudioSource DeadKamikazeSFX;
+
     /// <summary>
     /// An enumeration containing the possible AI states that this AI can go into.
     /// </summary>
@@ -18,7 +20,7 @@ public class Kamikaze : EnemyController
         /// <summary>
         /// The enemy is following a player.
         /// </summary>
-        Purusing,
+        Pursuing,
 
         /// <summary>
         /// The enemy has started its countdown timer and is charging itself up.
@@ -79,6 +81,8 @@ public class Kamikaze : EnemyController
     // Start is called before the first frame update
     void Start()
     {
+        
+        DeadKamikazeSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
         if (!player)
         {
             //obtain the Transform of the player
@@ -104,6 +108,8 @@ public class Kamikaze : EnemyController
     // Update is called once per frame
     void Update()
     {
+
+        DeadKamikazeSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
         switch (currentAIState)
         {
 
@@ -113,12 +119,13 @@ public class Kamikaze : EnemyController
                 //because we are always pursuing our target, simply move on to the next state
                 if (player)
                 {
-                    currentAIState = AIState.Purusing;
+                    
+                    currentAIState = AIState.Pursuing;
                 }
                 break;
 
             //the AI is currently pursuing the player
-            case AIState.Purusing:
+            case AIState.Pursuing:
 
                 //aim at the target and move towards it
                 AimAtTarget();
@@ -161,11 +168,13 @@ public class Kamikaze : EnemyController
 
             //the AI is exploding
             case AIState.Dead:
-
+               
                 AnimatorStateInfo currentAnimatorStateInfo = kamikazeAnimator.GetCurrentAnimatorStateInfo(0);
 
                 if (currentAnimatorStateInfo.normalizedTime >= 1 && currentAnimatorStateInfo.IsName("Alien 2 Explosion"))
                 {
+                    Debug.Log("Destroy enemy");
+                    
                     Destroy(gameObject);
                 }
 
@@ -181,7 +190,7 @@ public class Kamikaze : EnemyController
     {
         //transit the state where it charges up and explodes
         currentAIState = AIState.ChargingUp;
-
+        DeadKamikazeSFX.Play();
         //trigger the animation for charging up
         //(after which it will transit to the dying animation)
         kamikazeAnimator.SetTrigger("Die");

@@ -99,18 +99,18 @@ public class EnemySpawner : MonoBehaviour
     /// Called when the script is loaded or a value is changed in the
     /// inspector (Called in the editor only).
     /// </summary>
-    void OnValidate()
-    {
-        if (!mapSprite)
-        {
-            mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
-        }
+    //void OnValidate()
+    //{
+    //    if (!mapSprite)
+    //    {
+    //        mapSprite = mapTransform.GetComponent<SpriteRenderer>().sprite;
+    //    }
 
-        spawnSize = new Vector2(
-                mapSprite.rect.width / mapSprite.pixelsPerUnit * mapTransform.lossyScale.x,
-                mapSprite.rect.height / mapSprite.pixelsPerUnit * mapTransform.lossyScale.y
-            ) + Vector2.one * extraDistance;
-    }
+    //    spawnSize = new Vector2(
+    //            mapSprite.rect.width / mapSprite.pixelsPerUnit * mapTransform.lossyScale.x,
+    //            mapSprite.rect.height / mapSprite.pixelsPerUnit * mapTransform.lossyScale.y
+    //        ) + Vector2.one * extraDistance;
+    //}
 
     private Vector2 PickSpawnLocation()
     {
@@ -183,6 +183,7 @@ public class EnemySpawner : MonoBehaviour
         } while (pickedSet.quantity <= 0);
 
         //spawn the enemy in that set
+        Debug.Log("Enemy spawned");
         EnemyController enemyInstance = Instantiate(pickedSet.enemyType, spawnLocation, Quaternion.identity);
         enemyInstance.waveManager = WaveManager.waveManager;
 

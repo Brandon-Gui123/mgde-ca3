@@ -7,18 +7,18 @@ using UnityEngine;
 public class Audio_Manager : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    public AudioSource BGM;
+    
     public Slider BGMVolumeSlider;
     public Slider SFXVolumeSlider;
     
 
     private void Start()
     {
-        BGM.volume = PlayerPrefs.GetFloat("MusicVolume",0.2f);
+        //BGM.volume = PlayerPrefs.GetFloat("MusicVolume",0.2f);
         BGMVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume",0.5f);
         SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume",0.5f);
 
-        Debug.Log("music " + BGM.volume);
+        //Debug.Log("music " + BGM.volume);
         Debug.Log("volume " + BGMVolumeSlider.value);
         Debug.Log("SFXVolume " + SFXVolumeSlider.value);
 
@@ -26,7 +26,7 @@ public class Audio_Manager : MonoBehaviour
 
     private void Update()
     {
-        BGM.volume = BGMVolumeSlider.value;
+        //BGM.volume = BGMVolumeSlider.value;
         VolumePrefs();
         PlayerPrefs.Save();
         //audioMixer.SetFloat("Music", BGMVolumeSlider.value);
@@ -36,7 +36,7 @@ public class Audio_Manager : MonoBehaviour
 
     public void VolumePrefs()
     {
-        PlayerPrefs.SetFloat("MusicVolume", BGM.volume);
+        PlayerPrefs.SetFloat("MusicVolume", BGMVolumeSlider.value);
         PlayerPrefs.SetFloat("SFXVolume", SFXVolumeSlider.value);
     }
 

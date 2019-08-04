@@ -5,6 +5,8 @@ using UnityEngine;
 public class MGTurret : Turret
 {
 
+    public AudioSource MGTurretSFX;
+
     /// <summary>
     /// The number of times the turret attacks in one second.
     /// </summary>
@@ -37,17 +39,23 @@ public class MGTurret : Turret
     // Start is called before the first frame update
     void Start()
     {
+
+        MGTurretSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
+
         //start the coroutine for detecting enemies
         StartCoroutine(DetectEnemies(enemyDetectionPeriod));
 
         //calculate the time till next turret attack
         //period is the reciprocal of frequency
         firingCountdown = 1 / firingRate;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        MGTurretSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
         if (target && !target.IsDead)
         {
             //aim at the target
@@ -67,6 +75,8 @@ public class MGTurret : Turret
             //disable animation
             turretAnimator.SetBool("isFiring", false);
         }
+
+       
     }
 
     /// <summary>
@@ -89,8 +99,9 @@ public class MGTurret : Turret
         if (firingCountdown <= 0)
         {
             //fire a bullet at a specified speed towards the target
+            
             MGBullet bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
-
+            MGTurretSFX.Play();
             //apply a velocity to the bullet
             bulletInstance.gameObject.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
 

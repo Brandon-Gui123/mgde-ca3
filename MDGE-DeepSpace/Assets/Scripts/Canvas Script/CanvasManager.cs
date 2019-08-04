@@ -14,9 +14,10 @@ public class CanvasManager : MonoBehaviour
     public GameObject pauseMenuUI; //pause menu in game level
     public GameObject pauseButtonUI; //button to pause
     public GameObject mainMenuUI; //main menu in start menu
-
+    public GameObject commandpanelUI;
     public GameObject gameOverUI; //game over when player is dead 
     public GameObject OptionsMenuUI; //options menu
+    private GameObject joyStickUI;
 
 
     public bool GameIsPause = false;
@@ -54,7 +55,7 @@ public class CanvasManager : MonoBehaviour
         {
             mainMenuUI.SetActive(false);
             pauseButtonUI.SetActive(true);
-
+            commandpanelUI.SetActive(false);
         }
         else
         {
@@ -63,6 +64,8 @@ public class CanvasManager : MonoBehaviour
             pauseButtonUI.SetActive(false);
             print("Main Menu : " + mainMenuUI.activeSelf);
             pauseMenuUI.SetActive(false);
+            commandpanelUI.SetActive(true);
+            print("CommandPanel : " + commandpanelUI.activeSelf);
         }
 
     }
@@ -75,6 +78,7 @@ public class CanvasManager : MonoBehaviour
         {
 
             mainMenuUI.SetActive(true); //turn on menu page and turn off option page
+            commandpanelUI.SetActive(true);
 
         }
 
@@ -121,10 +125,14 @@ public class CanvasManager : MonoBehaviour
 
     public void Resume() // Resumes game play
     {
+        Debug.Log("Game is Resumed");
+
         pauseMenuUI.SetActive(false);
+        pauseButtonUI.SetActive(true);
         Time.timeScale = 1f;
         GameIsPause = false;
         
+        joyStickUI.SetActive(true);
         //try
         //{
         //    //joystickUI.SetActive(true);
@@ -139,12 +147,18 @@ public class CanvasManager : MonoBehaviour
 
     }
 
+  
     public void Pause() // Pauses game play
     {
+        Debug.Log("Game is Paused");
+
         pauseMenuUI.SetActive(true);
+        pauseButtonUI.SetActive(false);
         Time.timeScale = 0f;
         GameIsPause = true;
-        
+        Debug.Log("Game should be paused");
+        joyStickUI = GameObject.FindGameObjectWithTag("JoyStick");
+        joyStickUI.SetActive(false);
         //joystickUI.SetActive(false);
         //try
         //{

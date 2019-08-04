@@ -5,6 +5,8 @@ using UnityEngine;
 public class RailgunTurret : Turret
 {
 
+    public AudioSource RailgunTurretSFX;
+
     /// <summary>
     /// An enumeration containing the possible states of this turret.
     /// </summary>
@@ -105,6 +107,9 @@ public class RailgunTurret : Turret
     // Start is called before the first frame update
     void Start()
     {
+
+        RailgunTurretSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
+
         //run the coroutine that detects for enemies
         StartCoroutine(DetectEnemies(enemyDetectionPeriod));
 
@@ -123,13 +128,18 @@ public class RailgunTurret : Turret
     void Update()
     {
 
+       
+
+
+        RailgunTurretSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
+
         if (target && !target.IsDead)
         {
             //aim at the target
             AimAtTarget();
         }
 
-        Debug.Log(currentTurretState.ToString());
+
 
         switch (currentTurretState)
         {
@@ -147,6 +157,8 @@ public class RailgunTurret : Turret
 
                     //set the trigger of the animator
                     turretAnimator.SetTrigger("Charge");
+
+                    Debug.Log(currentTurretState.ToString());
                 }
                 else if (waitTimeCountdown > 0)
                 {
@@ -169,6 +181,8 @@ public class RailgunTurret : Turret
 
                     //move on to the firing state
                     currentTurretState = TurretState.Firing;
+
+                    Debug.Log(currentTurretState.ToString());
                 }
 
                 break;
@@ -216,6 +230,7 @@ public class RailgunTurret : Turret
                 //go back to idle
                 currentTurretState = TurretState.Idle;
 
+                Debug.Log(currentTurretState.ToString());
                 //reset wait duration
                 waitTimeCountdown = waitTimeBeforeCharging;
 
@@ -257,7 +272,7 @@ public class RailgunTurret : Turret
     {
 
         RailgunBullet railgunBulletInstance = Instantiate(railgunBullet, transform.position, transform.rotation);
-
+        RailgunTurretSFX.Play();
         //attach values into the script component
         railgunBullet.range = range;
         railgunBullet.startPosition = transform.position;
