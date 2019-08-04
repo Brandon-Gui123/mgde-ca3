@@ -2,18 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapToOpenUI : MonoBehaviour
+public class BuildingTile : MonoBehaviour
 {
+    [HideInInspector]
+    public bool hasTower = false;
+
+    [HideInInspector]
+    //the tower the tile contains
+    public GameObject tower;
+
     public List<GameObject> ListOfButtons = new List<GameObject>();
+    public List<GameObject> ListOfUpgrades = new List<GameObject>();
     public float buttonAngleSpacing = 30f;
     public float distanceFromOrigin = 2f;
     public float UIOpenTime = 15f;
     public float UICloseTime = 10f;
 
     bool openUI = false;
+    bool openUpgrades = false;
 
     void OnValidate() {
-        ShowButtons();
+        ShowButtons(ListOfButtons);
+        ShowButtons(ListOfUpgrades);
+    }
+    void Start() {
+        HideButtons(ListOfButtons);
+        HideButtons(ListOfUpgrades);
     }
 
     void Update() {
@@ -23,54 +37,58 @@ public class TapToOpenUI : MonoBehaviour
                 RaycastHit2D[] hitInfo = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(tArr[i].position), transform.forward);
                 if(hitInfo.Length == 0){
                     openUI = false;
+                    openUpgrades = false;
                 } else {
                     for (int h = 0; h < hitInfo.Length; h++) {
                         if (tArr[i].phase.Equals(TouchPhase.Began)) {
                             if (hitInfo[h].collider.gameObject.Equals(gameObject)) {
                                 openUI = !openUI;
+                                openUpgrades = !openUpgrades;
                                 break;
                             } else {
                                 openUI = false;
+                                openUpgrades = false;
                             }
                         }                    
                     }
                 }                
             }
+        }
+        if (!hasTower) {
             if (openUI) {
-                StartCoroutine(ToggleButtonActive(openUI));
+                ShowButtons(ListOfButtons);
             } else {
-                for (int i = 0; i < tArr.Length; i++) {
-                    if (tArr[i].phase.Equals(TouchPhase.Began)) {
-                        StartCoroutine(ToggleButtonActive(openUI));
-                        break;
-                    }
-                }
-                    
+                HideButtons(ListOfButtons);
+            }
+        } else {
+            if (openUpgrades) {
+                ShowButtons(ListOfUpgrades);
+            } else {
+                HideButtons(ListOfUpgrades);
             }
         }
         
-        if (openUI) {
-            ShowButtons();
-            StartCoroutine(ToggleButtonActive(true));
-        } else {
-            HideButtons();
-            StartCoroutine(ToggleButtonActive(openUI));
-        }
     }
 
 
-    void ShowButtons() {
-        float angleMultiplier = -ListOfButtons.Count / 2f + 0.5f;
-        for (int i = 0; i < ListOfButtons.Count; i++) {
-            ListOfButtons[i].transform.position = Vector3.Lerp(ListOfButtons[i].transform.position, transform.position + Quaternion.AngleAxis(buttonAngleSpacing * (angleMultiplier + i), Vector3.back) * transform.up * distanceFromOrigin, Time.deltaTime * UICloseTime);
+    void ShowButtons(List<GameObject> listOfButtons) {
+        float angleMultiplier = -listOfButtons.Count / 2f + 0.5f;
+        for (int i = 0; i < listOfButtons.Count; i++) {
+            listOfButtons[i].transform.position = Vector3.Lerp(listOfButtons[i].transform.position, transform.position + Quaternion.AngleAxis(buttonAngleSpacing * (angleMultiplier + i), Vector3.back) * transform.up * distanceFromOrigin, Time.deltaTime * UICloseTime);
+            listOfButtons[i].SetActive(true);
         }
     }
-    void HideButtons() {
-        foreach (GameObject g in ListOfButtons) {
+    void HideButtons(List<GameObject> listOfButtons) {
+        foreach (GameObject g in listOfButtons) {
             g.transform.position = Vector3.Lerp(g.transform.position, transform.position, Time.deltaTime * UIOpenTime);
+            StartCoroutine(HideButton(g, 0.2f));
         }
     }
-    IEnumerator ToggleButtonActive(bool enable) {
+    IEnumerator HideButton(GameObject button, float delay) {
+        yield return new WaitForSeconds(delay);
+        button.SetActive(false);
+    }
+    IEnumerator ToggleButtonActive(bool enable, List<GameObject> ListOfButtons) {
         if (enable) {
             yield return new WaitForSeconds(Time.deltaTime);
         } else {
