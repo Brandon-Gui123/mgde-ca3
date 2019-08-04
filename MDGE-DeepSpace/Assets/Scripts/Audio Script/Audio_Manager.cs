@@ -54,5 +54,7 @@ public class Audio_Manager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("MusicVolume", 100);
         PlayerPrefs.SetFloat("SFXVolume", 100);
+        BGMVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
     }
 }
