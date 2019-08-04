@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3546323513523189672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 80355cfac28a5bd4b8fcb7e2cf267e07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -106,8 +106,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3546323513523189672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44834da7e04eea24398de5e4ed470ebb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fb04956aeb451e438a597293ad2511f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildLocation: {fileID: 0}
-  tower: {fileID: 0}
+  towerPrefab: {fileID: 5557148166739336295, guid: 95096691c86ac5b468f4871d5fa17fa0,
+    type: 3}
