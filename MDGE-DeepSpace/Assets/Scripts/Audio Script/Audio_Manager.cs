@@ -49,4 +49,10 @@ public class Audio_Manager : MonoBehaviour
     {
         audioMixer.SetFloat("SFX", sfxvolume);
     }
+
+    public void ResetAudio()
+    {
+        PlayerPrefs.SetFloat("MusicVolume", 100);
+        PlayerPrefs.SetFloat("SFXVolume", 100);
+    }
 }
