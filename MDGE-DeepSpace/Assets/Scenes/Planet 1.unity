@@ -791,8 +791,19 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2663551055036941753, guid: a49ab0c5224933645ba13e05a98c22b2,
+        type: 3}
+      propertyPath: playerexplodesfx
+      value: 
+      objectReference: {fileID: 211493171}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49ab0c5224933645ba13e05a98c22b2, type: 3}
+--- !u!82 &211493171 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4202046670729793494, guid: a49ab0c5224933645ba13e05a98c22b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 211493170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &215904748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2663551054998419059, guid: a49ab0c5224933645ba13e05a98c22b2,
@@ -2279,6 +2290,7 @@ MonoBehaviour:
   start_health: 100
   playerIsDead: 0
   healthbar: {fileID: 0}
+  playerexplodesfx: {fileID: 0}
   current_health: 0
 --- !u!50 &1166323105
 Rigidbody2D:

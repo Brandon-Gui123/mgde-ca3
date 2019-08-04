@@ -9,17 +9,20 @@ public class Player_Health_Script : MonoBehaviour
     public float start_health = 100; //starting health of the player
     public bool playerIsDead = false;
     public Image healthbar;
+    public AudioSource playerexplodesfx;
 
     public float current_health; //to initate the health of the player at start
     // Start is called before the first frame update
     void Start()
     {
+        playerexplodesfx.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
         current_health = start_health; //initialise current_health, this is to prevent health from being touched.
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerexplodesfx.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
@@ -38,7 +41,7 @@ public class Player_Health_Script : MonoBehaviour
     {
         print("damage taken" + damage_value);
         current_health -= damage_value; //set the health after damage taken
-        if (current_health <= 0) { current_health = 0; playerIsDead = true;  print("player is dead"); } //health cannot be negative, player is now dead
+        if (current_health <= 0) { current_health = 0; playerIsDead = true; playerexplodesfx.Play(); print("player is dead"); } //health cannot be negative, player is now dead
 
         updateHealthUI(current_health, start_health  ); //update health bar
     }
