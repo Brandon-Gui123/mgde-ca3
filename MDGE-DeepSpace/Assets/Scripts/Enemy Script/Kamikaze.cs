@@ -160,8 +160,10 @@ public class Kamikaze : EnemyController
                     if (distFromPlayer <= explosionRadius)
                     {
                         float damageDealt = Mathf.Lerp(maxDamage, 0, distFromPlayer / explosionRadius);
-                        Debug.Log("Damage dealt: " + damageDealt);
                     }
+
+                    //play explosion sound
+                    DeadKamikazeSFX.Play();
                 }
 
                 break;
@@ -173,8 +175,6 @@ public class Kamikaze : EnemyController
 
                 if (currentAnimatorStateInfo.normalizedTime >= 1 && currentAnimatorStateInfo.IsName("Alien 2 Explosion"))
                 {
-                    Debug.Log("Destroy enemy");
-                    
                     Destroy(gameObject);
                 }
 
@@ -190,7 +190,7 @@ public class Kamikaze : EnemyController
     {
         //transit the state where it charges up and explodes
         currentAIState = AIState.ChargingUp;
-        DeadKamikazeSFX.Play();
+        
         //trigger the animation for charging up
         //(after which it will transit to the dying animation)
         kamikazeAnimator.SetTrigger("Die");

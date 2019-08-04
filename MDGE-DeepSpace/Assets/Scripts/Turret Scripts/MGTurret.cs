@@ -56,6 +56,7 @@ public class MGTurret : Turret
     {
 
         MGTurretSFX.volume = PlayerPrefs.GetFloat("SFXVolume", 0.2f);
+
         if (target && !target.IsDead)
         {
             //aim at the target
@@ -99,9 +100,10 @@ public class MGTurret : Turret
         if (firingCountdown <= 0)
         {
             //fire a bullet at a specified speed towards the target
-            
             MGBullet bulletInstance = Instantiate(bullet, transform.position, transform.rotation);
+
             MGTurretSFX.Play();
+
             //apply a velocity to the bullet
             bulletInstance.gameObject.GetComponent<Rigidbody2D>().velocity = transform.up * 10;
 
