@@ -106,8 +106,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7336197471703987269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44834da7e04eea24398de5e4ed470ebb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fb04956aeb451e438a597293ad2511f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildLocation: {fileID: 0}
-  tower: {fileID: 0}
+  towerPrefab: {fileID: 0}
