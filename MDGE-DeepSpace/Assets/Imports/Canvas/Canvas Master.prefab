@@ -293,7 +293,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 37
+  m_fontSize: 39.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2158,7 +2158,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2768183693523090117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6282364099839106178}
+        m_MethodName: SaveAchievementInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6282364099839106178}
+        m_MethodName: SaveAchievementInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2768183693600395548
@@ -2255,7 +2277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2768183693615528360
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2491,6 +2513,7 @@ GameObject:
   - component: {fileID: 2768183693756978556}
   - component: {fileID: 2768183693756978557}
   - component: {fileID: 2768183693756978558}
+  - component: {fileID: 6282364099839106178}
   - component: {fileID: 2768183693756978559}
   - component: {fileID: 2768183693756978552}
   m_Layer: 5
@@ -2587,6 +2610,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6282364099839106178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2768183693756978553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638bd7ad43b0a6e44a40723c9bca845e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWinAchievement1: 0
+  isWinAchievement2: 0
+  isWinAchievement3: 0
+  frame1: {fileID: 2768183694673038357}
+  frame2: {fileID: 8358220392333642843}
+  frame3: {fileID: 6571253383567253291}
 --- !u!114 &2768183693756978559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2618,6 +2659,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 048c28a1467b2d54e9fa4ec959973ce5, type: 2}
+  BGM: {fileID: 0}
+  BGMVolumeSlider: {fileID: 0}
+  SFXVolumeSlider: {fileID: 0}
 --- !u!1 &2768183693770809767
 GameObject:
   m_ObjectHideFlags: 0
@@ -3439,7 +3483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2768183694106377044
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3632,6 +3676,17 @@ MonoBehaviour:
       - m_Target: {fileID: 2768183694106377045}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6282364099839106178}
+        m_MethodName: setAchievementFrames
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6435,7 +6490,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 43.15
+  m_fontSize: 46.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
